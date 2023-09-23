@@ -1,4 +1,4 @@
-import app_logo from "../../assets/application_logo.jpg";
+import app_logo from "../../assets/logo.png";
 
 function Loading({ message, showLoader = true }) {
     return (

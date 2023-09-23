@@ -195,6 +195,12 @@ cursor:pointer}
 	width:100%;
 margin:0 auto}
 
+.bg-gray-200 {
+	background-image: url('../assets/GettyImages.jpg');
+	background-size: cover;
+	background-position: center;
+  }
+
 .container-login100
 {
 	display:-webkit-box;
@@ -215,18 +221,25 @@ margin:0 auto}
 
 .inscription {
 	text-align: center;
-	color: white;
+	color: red;
 	margin-top: 50px;
 	position: relative;
 	top: 10%;
 }
 .inscription a:hover{
-	color: #fff;
+	color: red;
 }
 a{
-	text-decoration: none;
-	color: #fff;
+	text-decoration: underline;
+	color: orangered;
 }
+
+.inscription a:before {
+	content: "\2192 "; /* code unicode pour la flèche */
+	font-size: 1.2em; /* taille de la flèche */
+	margin-right: 0.5em; /* espace entre la flèche et le texte */
+	
+  }
 
 .login100-pic
 {
