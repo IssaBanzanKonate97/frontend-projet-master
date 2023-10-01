@@ -30,6 +30,17 @@ const PraticionerDetails = () => {
     get();
   }, [service, id]);
 
+  useEffect(() => {
+    const get = async () => {
+      const date = new Date('2023-10-05').toISOString().split('T')[0];
+
+      const slots = await service.getAvailableSlots(date);
+
+      console.log('slots', slots);
+    };
+
+    get();
+  }, [service]);
   return (
     practitioner === undefined ? <Loading /> :
       <div className='bg-slate-100 h-screen w-screen overflow-y-auto'>

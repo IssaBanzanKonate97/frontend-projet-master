@@ -1,7 +1,7 @@
-import Core from "../Core";
 import practitioners_details from "../../shared/data/practitioners.details.data"; // fixtures
+import Booking from "../Booking";
 
-class PractitionerService extends Core {
+class PractitionerService extends Booking {
   constructor() {
     super();
   }
