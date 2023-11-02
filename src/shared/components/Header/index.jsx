@@ -1,6 +1,6 @@
 
 import logo from '../../../assets/logo.png';
-import { Home, Phone, Users } from 'react-feather';
+import { Heart, Home, Phone, Users } from 'react-feather';
 
 const navigationLinks = [
     {
@@ -16,11 +16,11 @@ const navigationLinks = [
         url: '#',
         icon: <Phone />,
     },
-    // {
-    //     label: 'Gérer mes RDV',
-    //     url: '#',
-    //     icon: <Calendar />,
-    // }
+    {
+        label: 'Devenir praticien',
+        url: '/become-practitioner',
+        icon: <Heart />,
+    }
 ];
 
 function Header() {

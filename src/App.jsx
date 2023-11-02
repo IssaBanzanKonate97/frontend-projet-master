@@ -5,10 +5,10 @@ import Loading from './app_components/Loading/Loading';
 const Dashboard = lazy(() => import('./app_components/Dashboard/Dashboard'));
 const Login = lazy(() => import('./app_components/Auth/Login'));
 const Register = lazy(() => import('./app_components/Register/Register'));
-// const Presentation = lazy(() => import('./app_components/Presentation/Presentation'));
 const PresentationV2 = lazy(() => import('./app_components/PresentationV2'));
 const PractitionerDetails = lazy(() => import('./app_components/PractitionerDetails'));
 const Calendar = lazy(() => import('./app_components/Calendar/Calendar'));
+const BecomePractitioner = lazy(() => import('./app_components/BecomePractitioner'));
 
 // eslint-disable-next-line react/prop-types
 const LazyLoader = ({ children }) => {
@@ -47,6 +47,12 @@ export default function App() {
         <Route path="/calendar" element={
           <LazyLoader>
             <Calendar />
+          </LazyLoader>
+        } />
+
+        <Route path="/become-practitioner" element={
+          <LazyLoader>
+            <BecomePractitioner />
           </LazyLoader>
         } />
       </Routes>
