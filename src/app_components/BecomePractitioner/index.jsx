@@ -8,7 +8,7 @@ const BecomePractitioner = () => {
                 <div className='h-full max-w-5xl py-8 mx-auto flex flex-col justify-center'>
                     <div className='flex flex-col gap-6'>
                         <h1 className='inter text-4xl max-w-xl font-bold text-black leading-tight tracking-tighter'>
-                            Devenez praticien spécialiste en hypnothérapie
+                         Devenez praticien : Transformez des vies, soyez l'espoir !
                         </h1>
 
                         <div className=''>

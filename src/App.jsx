@@ -4,11 +4,12 @@ import Loading from './app_components/Loading/Loading';
 
 const Dashboard = lazy(() => import('./app_components/Dashboard/Dashboard'));
 const Login = lazy(() => import('./app_components/Auth/Login'));
-const Register = lazy(() => import('./app_components/Register/Register'));
 const PresentationV2 = lazy(() => import('./app_components/PresentationV2'));
 const PractitionerDetails = lazy(() => import('./app_components/PractitionerDetails'));
-const Calendar = lazy(() => import('./app_components/Calendar/Calendar'));
 const BecomePractitioner = lazy(() => import('./app_components/BecomePractitioner'));
+const Nous = lazy(() => import('./app_components/Nous'));
+const Propos = lazy(() => import('./app_components/Propos'));
+const Calendar = lazy(() => import('./app_components/Calendar'));
 
 // eslint-disable-next-line react/prop-types
 const LazyLoader = ({ children }) => {
@@ -29,11 +30,7 @@ export default function App() {
             <Login />
           </LazyLoader>
         } />
-        <Route path="/register" element={
-          <LazyLoader>
-            <Register />
-          </LazyLoader>
-        } />
+        
         <Route path="/dashboard" element={
           <LazyLoader>
             <Dashboard />
@@ -44,15 +41,26 @@ export default function App() {
             <PractitionerDetails />
           </LazyLoader>
         } />
-        <Route path="/calendar" element={
-          <LazyLoader>
-            <Calendar />
-          </LazyLoader>
-        } />
+        
 
         <Route path="/become-practitioner" element={
           <LazyLoader>
             <BecomePractitioner />
+          </LazyLoader>
+        } />
+        <Route path="/nous" element={
+          <LazyLoader>
+            <Nous />
+          </LazyLoader>
+        } />
+         <Route path="/propos" element={
+          <LazyLoader>
+            <Propos />
+          </LazyLoader>
+        } />
+        <Route path="/calendar" element={
+          <LazyLoader>
+            <Calendar />
           </LazyLoader>
         } />
       </Routes>

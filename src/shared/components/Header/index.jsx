@@ -9,7 +9,7 @@ const navigationLinks = [
         icon: <Home />,
     }, {
         label: 'Qui sommes nous?',
-        url: '#',
+        url: '/Nous',
         icon: <Users />,
     }, {
         label: 'Contact',
