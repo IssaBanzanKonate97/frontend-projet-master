@@ -5,7 +5,7 @@ import { Heart, Home, Phone, Users } from 'react-feather';
 const navigationLinks = [
     {
         label: 'Accueil',
-        url: '#',
+        url: '/',
         icon: <Home />,
     }, {
         label: 'Qui sommes nous?',
@@ -13,7 +13,7 @@ const navigationLinks = [
         icon: <Users />,
     }, {
         label: 'Contact',
-        url: '#',
+        url: '/Contact',
         icon: <Phone />,
     },
     {

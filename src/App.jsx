@@ -10,6 +10,7 @@ const BecomePractitioner = lazy(() => import('./app_components/BecomePractitione
 const Nous = lazy(() => import('./app_components/Nous'));
 const Propos = lazy(() => import('./app_components/Propos'));
 const Calendar = lazy(() => import('./app_components/Calendar'));
+const Contact = lazy(() => import('./app_components/Contact'));
 
 // eslint-disable-next-line react/prop-types
 const LazyLoader = ({ children }) => {
@@ -61,6 +62,12 @@ export default function App() {
         <Route path="/calendar" element={
           <LazyLoader>
             <Calendar />
+          </LazyLoader>
+        } />
+
+        <Route path="/contact" element={
+          <LazyLoader>
+            <Contact />
           </LazyLoader>
         } />
       </Routes>

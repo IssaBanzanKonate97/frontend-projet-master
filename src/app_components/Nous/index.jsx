@@ -5,7 +5,7 @@ const Nous = () => {
     return (
         <Layout>
             <section className='w-full rounded-lg bg-white'>
-                <div className='h-full max-w-5xl py-8 mx-auto flex flex-col md:flex-row justify-center items-center'>
+                <div className='max-w-5xl py-8 mx-auto flex flex-col md:flex-row justify-center items-center'>
                     <div className='md:w-1/2 pr-6'>
                         <img src={backgroundImage} alt="Image" className="w-full h-auto rounded-lg" />
                     </div>
@@ -39,8 +39,7 @@ const Nous = () => {
                         Avec la méthode ADIOS, ce comportement inadapté n’est plus une fatalité contre laquelle on ne peut agir. Au cours de leur accompagnement, les patients peuvent comprendre que la dépendance ne relève pas de leur identité.
                     </p>
                 </div>
-            </section>
-            
+            </section>   
 
             
         </Layout>

@@ -101,6 +101,7 @@ const Propos = () => {
                     </div>
                 </div>
             </section>
+            
 
         </Layout>
     );
