@@ -14,9 +14,7 @@ const Calendar = () => {
   const [calendars, setCalendars] = useState([]);
   const [selectedCalendar, setSelectedCalendar] = useState('');
   const [selectedPractitioner, setSelectedPractitioner] = useState('');
-  const [selectedDate, setSelectedDate] = useState(null);
-  const [availableTimeSlots, setAvailableTimeSlots] = useState([]);
-  const [availableDates, setAvailableDates] = useState([]);
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -35,7 +33,7 @@ const Calendar = () => {
           appointmentType: selectedAppointmentType,
           practitioner: selectedPractitioner,
           calendar: selectedCalendar,
-          datetime: selectedDate,
+          
         },
         {
           headers: {
@@ -80,32 +78,8 @@ const Calendar = () => {
     }
   };
 
-  const fetchAvailableTimeSlots = async () => {
-    try {
-      if (selectedPractitioner && selectedDate) {
-        const response = await axios.get('http://localhost:8080/availability', {
-          params: {
-            practitioner: selectedPractitioner,
-            date: selectedDate.toISOString(),
-          },
-        });
-        setAvailableTimeSlots(response.data);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const fetchAvailableDates = async () => {
-    try {
-      if (selectedCalendar) {
-        const response = await axios.get(`http://localhost:8080/calendars/${selectedCalendar}/dates`);
-        setAvailableDates(response.data.dates);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
+ 
+  
 
   const handleAppointmentTypeChange = (newAppointmentType) => {
     setSelectedAppointmentType(newAppointmentType);
@@ -124,13 +98,7 @@ const Calendar = () => {
     }
   }, [selectedAppointmentType]);
 
-  useEffect(() => {
-    fetchAvailableTimeSlots();
-  }, [selectedPractitioner, selectedDate]);
-
-  useEffect(() => {
-    fetchAvailableDates();
-  }, [selectedCalendar]);
+  
 
   return (
     <Layout>
@@ -221,33 +189,7 @@ const Calendar = () => {
             </select>
           </div>
 
-          {availableDates.length > 0 && (
-            <div className="mb-4">
-              <label htmlFor="date" className="block text-gray-700 font-bold mb-2">
-                Dates disponibles
-              </label>
-              <select
-                id="date"
-                value={selectedDate}
-                onChange={(e) => setSelectedDate(new Date(e.target.value))}
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                required
-              >
-                {availableDates.map((date) => (
-                  <option key={date} value={date}>
-                    {new Date(date).toLocaleString('fr-FR', {
-                      weekday: 'long',
-                      year: 'numeric',
-                      month: 'long',
-                      day: 'numeric',
-                      hour: '2-digit',
-                      minute: '2-digit',
-                    })}
-                  </option>
-                ))}
-              </select>
-            </div>
-          )}
+          
 
           <button
             type="submit"

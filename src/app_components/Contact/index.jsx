@@ -3,6 +3,7 @@ import Layout from "../Layout";
 import React from 'react';
 import { Heart, Home, Phone, Users, Mail } from 'react-feather';
 import WorkingRemotelyImage from '../../assets/lt.png';
+import WorkingRemotelyImage2 from '../../assets/tire-removebg-preview.png';
 
 const Contact = () => {
   return (
@@ -10,24 +11,24 @@ const Contact = () => {
       <div className="container mx-auto mt-2 flex flex-col justify-between">
         <div className="flex justify-between items-center mt-2 mb-4">
           <div>
-          <h1 className="text-4xl font-semibold mb-5 text-black">Contactez-nous !</h1>
+          <h1 className="text-4xl font-semibold mb-5 text-black">Contactez-us !</h1>
           <p className="text-lg text-black font-medium max-w-xl">
-              Libérez votre avenir ou celui d’un proche grâce à la méthode ADIOS. 
-              Prenez contact pour plus d’informations sur notre méthode, 
-              le déroulement des séances, la prise de rendez-vous ou toutes autres informations.
+              Free your future or that of a loved one with the ADIOS method.
+              Contact us for more information about our method,
+              the sessions' process, scheduling appointments, or any other details.
             </p>
           </div>
-          <img src={WorkingRemotelyImage} alt="Working Remotely" className="max-w-md"/>
+          <img src={WorkingRemotelyImage} alt="Working Remotely" className="max-w-md mt-9"/>
         </div>
 
-        <h1 className="text-3xl font-semibold mb-2 text-black">Envoyez nous un message</h1>
+        <h1 className="text-3xl font-semibold mb-2 text-black">Send us a message</h1>
 
         <div className="flex justify-between mt-8">
           <div className="max-w-xl w-full">
             <form className="w-full">
               <div className="mb-4">
                 <label htmlFor="name" className="block text-sm font-medium text-gray-600">
-                  Nom
+                  Name
                 </label>
                 <input
                   type="text"
@@ -39,7 +40,7 @@ const Contact = () => {
               </div>
               <div className="mb-4">
                 <label htmlFor="email" className="block text-sm font-medium text-gray-600">
-                  Adresse e-mail
+                  Mail
                 </label>
                 <input
                   type="email"
@@ -66,13 +67,13 @@ const Contact = () => {
                   type="submit"
                   className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
                 >
-                  Envoyer
+                  Send
                 </button>
               </div>
             </form>
           </div>
 
-          <div className="ml-1 mt-10">
+          <div className="mr-20 mt-10">
             <div className="mb-4 flex items-center">
               <Phone className="mr-2" size={30} color="black" strokeWidth={2} />
               <p className="font-semibold text-black">Depuis la France</p>
@@ -88,6 +89,9 @@ const Contact = () => {
             <div className="mt-6 flex items-center">
               <Mail className="mr-2" size={30} color="black" strokeWidth={2} />
               <p className="font-semibold text-black">contact@institutadios.com</p>
+            </div>
+            <div className="mt-10">
+              <img src={WorkingRemotelyImage2} alt="Working Remotely" className="max-w-md"/>
             </div>
           </div>
         </div>

@@ -1,7 +1,7 @@
 
 const navigationLinks = [
     {
-        name: "L'essentiel",
+        name: "Essential",
         href: '#about',
     },
     {
@@ -9,7 +9,7 @@ const navigationLinks = [
         href: '#presentation',
     },
     {
-        name: "Horaires",
+        name: "Hours",
         href: '#opening_hours',
     },
 ];

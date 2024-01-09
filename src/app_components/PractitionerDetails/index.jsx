@@ -2,7 +2,6 @@
 import { useParams } from 'react-router-dom';
 // import logo from '../../assets/logo.png';
 // import profilePicture from '../../assets/thumbnail.jpeg';
-import './PraticionerDetails.css';
 import { useEffect } from 'react';
 import PresentationHeader from './components/PresentationHeader';
 import { useState } from 'react';
@@ -13,9 +12,165 @@ import { AlignLeft, Clock } from 'react-feather';
 import usePractitionerService from '../../app_hooks/usePractitionerService';
 import { PractitionerProvider } from '../../app_contexts/Practitioner';
 import Loading from '../Loading/Loading';
+import { Heart, Home, Phone, Users } from 'react-feather';
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
+import axios from 'axios';
+
+
 
 const PraticionerDetails = () => {
+  const [name, setName] = useState('');
+  const [phone, setPhone] = useState('');
+  const [email, setEmail] = useState('');
+  const [selectedAppointmentType, setSelectedAppointmentType] = useState('');
+  const [appointmentTypes, setAppointmentTypes] = useState([]);
+  const [practitioners, setPractitioners] = useState([]);
+  const [calendars, setCalendars] = useState([]);
+
+  const [selectedPractitioner, setSelectedPractitioner] = useState('');
+  
+  const [selectedCalendar, setSelectedCalendar] = useState('');
+  const [availableSlots, setAvailableSlots] = useState([]);
+  const [selectedDate, setSelectedDate] = useState(null);
+ 
+
+  const [minAvailableDate, setMinAvailableDate] = useState('');
+  const [maxAvailableDate, setMaxAvailableDate] = useState('');
+
   const { id } = useParams();
+  
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      if (!selectedDate) {
+        console.error('Veuillez sélectionner une date et une heure pour le rendez-vous.');
+        return;
+      }
+
+      const response = await axios.post(
+        'http://localhost:8080/api/bookings',
+        {
+          name,
+          phone,
+          email,
+          appointmentType: selectedAppointmentType,
+          practitioner: selectedPractitioner,
+          calendar: selectedCalendar,
+          
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const fetchAvailableSlots = async (calendarId, selectedDate) => {
+    if (calendarId && selectedDate) {
+      try {
+        // Formater selectedDate au format ISO 8601 (YYYY-MM-DD)
+        const formattedDate = selectedDate.toISOString().split('T')[0];
+  
+        const response = await axios.get('http://localhost:8080/availability', {
+          params: {
+            appointmentTypeID: calendarId, // Assurez-vous que le nom correspond à celui attendu par le back-end
+            datetime: formattedDate, // Vous devez passer la date sélectionnée
+          },
+        });
+        
+        setAvailableSlots(response.data.data); // Assurez-vous que c'est le bon chemin dans la réponse
+      } catch (error) {
+        console.error('Error fetching available dates:', error);
+        setAvailableSlots([]);
+      }
+    }
+  };
+  
+  
+  //const availableDates = availableSlots.map(slot => new Date(slot.date));
+  const handleDateChange = date => {
+    // Vérifier si la date sélectionnée est disponible
+    const isDateAvailable = availableSlots.some(slot =>
+      date.getFullYear() === new Date(slot).getFullYear() &&
+      date.getMonth() === new Date(slot).getMonth() &&
+      date.getDate() === new Date(slot).getDate()
+    );
+  
+    if (isDateAvailable) {
+      setSelectedDate(date); // Met à jour l'état avec la date sélectionnée
+    } else {
+      // Si la date n'est pas disponible, informer l'utilisateur
+      alert("Cette date n'est pas disponible. Veuillez en sélectionner une autre.");
+    }
+  };
+  
+  
+  
+
+  const fetchAppointmentTypes = async () => {
+    try {
+      const response = await axios.get('http://localhost:8080/appointment-types/all');
+      setAppointmentTypes(response.data.appointmentTypes);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const fetchPractitioners = async () => {
+    try {
+      const response = await axios.get('http://localhost:8080/practitioners', {
+        params: {
+          appointmentType: selectedAppointmentType,
+        },
+      });
+      setPractitioners(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const fetchCalendars = async () => {
+    try {
+      const response = await axios.get('http://localhost:8080/calendars/all');
+      setCalendars(response.data.calendars);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  
+  
+
+  const handleAppointmentTypeChange = (newAppointmentType) => {
+    setSelectedAppointmentType(newAppointmentType);
+    setPractitioners([]);
+    fetchPractitioners();
+  };
+
+  useEffect(() => {
+    fetchAppointmentTypes();
+    fetchCalendars();
+  }, []);
+
+useEffect(() => {
+  if (selectedCalendar) {
+    fetchAvailableSlots(selectedCalendar);
+  }
+}, [selectedCalendar]);
+  
+  
+
+  useEffect(() => {
+    if (selectedAppointmentType) {
+      fetchPractitioners();
+    }
+  }, [selectedAppointmentType]);
 
   const service = usePractitionerService();
 
@@ -41,6 +196,7 @@ const PraticionerDetails = () => {
 
     get();
   }, [service]);
+  const [showInput, setShowInput] = useState(false); // State to control the display of the input
   return (
     practitioner === undefined ? <Loading /> :
       <div className='bg-slate-100 h-screen w-screen overflow-y-auto'>
@@ -67,7 +223,7 @@ const PraticionerDetails = () => {
               <div className='grid grid-cols-2 gap-8'>
                 <div>
                   <h5 className="text-slate-700 font-bold text-sm mb-2">
-                    Horaires
+                    Hours
                   </h5>
                   <p className="text-slate-600 text-sm mb-2 inter">
                     {practitioner.openingHours}
@@ -85,13 +241,93 @@ const PraticionerDetails = () => {
               </div>
             </DetailsCard>
           </div>
-          <div className='w-96'>
-            <DetailsCard
-              title="En résumé"
-            >
+          <DetailsCard title="In summary ">
+  <div className="flex flex-col gap-2"> {/* Flex container for items in column */}
+    <div className="flex items-center">
+      <Heart className="w-4 h-4 text-cyan-600 mr-2" />
+      <p className="text-slate-600 text-sm mb-2 inter">
+        Accepts new patients on  Free session
+      </p>
+    </div>
+    <div className="flex items-center">
+      <Home className="w-4 h-4 text-cyan-600 mr-2" />
+      <p className="text-slate-600 text-sm mb-2 inter">
+        Au Millenium
+        <br />
+        390 Avenue des Abrivados, 34400 Lunel
+      </p>
+    </div>
+    <button
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                onClick={() => setShowInput(!showInput)}
+              >
+                Take Appointment
+              </button>
+    {showInput && (
+                   
+                <select
+                id="appointmentType"
+                value={selectedAppointmentType}
+                onChange={(e) => handleAppointmentTypeChange(e.target.value)}
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                required
+              >
+                <option value="">Choose appointment type</option>
+                {appointmentTypes.map((appointmentType) => (
+                  <option key={appointmentType.id} value={appointmentType.id}>
+                    {appointmentType.name}
+                  </option>
+                ))}
+              </select>
+              )}
 
-            </DetailsCard>
-          </div>
+
+
+{selectedAppointmentType && showInput && (
+                   
+                   <select
+                   id="calendar"
+                   value={selectedCalendar}
+                   onChange={(e) => setSelectedCalendar(e.target.value)}
+                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                   required
+                 >
+                   <option value="">Choose calendar</option>
+                   {calendars.map((calendar) => (
+                     <option key={calendar.id} value={calendar.id}>
+                       {calendar.name}
+                     </option>
+                   ))}
+                 </select>
+                 )}
+{selectedCalendar && showInput && (
+  <Calendar
+    onChange={handleDateChange}
+    value={selectedDate} // Ajoutez cette ligne pour que le calendrier montre la date sélectionnée
+    tileClassName={({ date, view }) => {
+      // Vérifier si la vue est 'month' pour éviter de marquer les autres vues
+      if (view === 'month') {
+        // Convertir les slots disponibles en objets Date
+        const availableDates = availableSlots.map(slot => new Date(slot.date));
+
+        // Trouver si la date est dans la liste des créneaux disponibles
+        const isDateAvailable = availableDates.some(availableDate =>
+          date.getFullYear() === availableDate.getFullYear() &&
+          date.getMonth() === availableDate.getMonth() &&
+          date.getDate() === availableDate.getDate()
+        );
+  
+        // Retourner une classe CSS en fonction de la disponibilité
+        return isDateAvailable ? 'availableDate' : 'unavailableDate';
+      }
+    }}
+    // D'autres props si nécessaire...
+  />
+)}
+
+
+  </div>
+</DetailsCard>
         </section>
       </div>
   );

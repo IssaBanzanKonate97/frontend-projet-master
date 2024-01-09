@@ -1,23 +1,23 @@
 
-import logo from '../../../assets/logo.png';
+import logo from '../../../assets/Blue_Blob_Health_Care_Logo_3_-removebg-preview.png';
 import { Heart, Home, Phone, Users } from 'react-feather';
 
 const navigationLinks = [
     {
-        label: 'Accueil',
+        label: 'Home',
         url: '/',
         icon: <Home />,
     }, {
-        label: 'Qui sommes nous?',
+        label: 'About us?',
         url: '/Nous',
         icon: <Users />,
     }, {
-        label: 'Contact',
+        label: 'Contact us',
         url: '/Contact',
         icon: <Phone />,
     },
     {
-        label: 'Devenir praticien',
+        label: 'Become practitioner',
         url: '/become-practitioner',
         icon: <Heart />,
     }
