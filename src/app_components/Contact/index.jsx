@@ -4,8 +4,45 @@ import React from 'react';
 import { Heart, Home, Phone, Users, Mail } from 'react-feather';
 import WorkingRemotelyImage from '../../assets/lt.png';
 import WorkingRemotelyImage2 from '../../assets/tire-removebg-preview.png';
+import axios from 'axios';
+import { useEffect } from 'react';
+import { useState } from 'react';
 
 const Contact = () => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [message, setMessage] = useState('');
+
+  const handleSubmit = async (event) => {
+    event.preventDefault(); // Empêche le rechargement de la page
+
+    // L'objet à envoyer au serveur
+    const contactData = { name, email, message };
+
+    try {
+      const response = await axios.post(('http://localhost:8080/api/contact'), {
+
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(contactData),
+      });
+
+      if (response.ok) {
+        // Si le serveur renvoie une réponse positive
+        const responseData = await response.json();
+        // Traitez la réponse, par exemple en affichant un message de succès
+        console.log(responseData);
+      } else {
+        // Gérez les réponses d'erreur du serveur
+        console.error('Server responded with an error:', response);
+      }
+    } catch (error) {
+      // Gérez les erreurs de réseau/connexion
+      console.error('There was an error sending the contact data:', error);
+    }
+  };
   return (
     <Layout>
       <div className="container mx-auto mt-2 flex flex-col justify-between">

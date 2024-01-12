@@ -14,6 +14,8 @@ const Calendar = () => {
   const [calendars, setCalendars] = useState([]);
   const [selectedCalendar, setSelectedCalendar] = useState('');
   const [selectedPractitioner, setSelectedPractitioner] = useState('');
+  const [selectedDate, setSelectedDate] = useState(null);
+
 
 
   const handleSubmit = async (e) => {

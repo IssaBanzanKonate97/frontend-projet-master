@@ -33,10 +33,8 @@ const PraticionerDetails = () => {
   const [selectedCalendar, setSelectedCalendar] = useState('');
   const [availableSlots, setAvailableSlots] = useState([]);
   const [selectedDate, setSelectedDate] = useState(null);
+  
  
-
-  const [minAvailableDate, setMinAvailableDate] = useState('');
-  const [maxAvailableDate, setMaxAvailableDate] = useState('');
 
   const { id } = useParams();
   
@@ -58,7 +56,7 @@ const PraticionerDetails = () => {
           appointmentType: selectedAppointmentType,
           practitioner: selectedPractitioner,
           calendar: selectedCalendar,
-          
+          date: selectedDate.toISOString().split('T')[0],
         },
         {
           headers: {
@@ -72,7 +70,7 @@ const PraticionerDetails = () => {
     }
   };
 
-  const fetchAvailableSlots = async (calendarId, selectedDate) => {
+  /*const fetchAvailableSlots = async (calendarId, selectedDate) => {
     if (calendarId && selectedDate) {
       try {
         // Formater selectedDate au format ISO 8601 (YYYY-MM-DD)
@@ -91,39 +89,39 @@ const PraticionerDetails = () => {
         setAvailableSlots([]);
       }
     }
-  };
+  };*/
   
   
-  //const availableDates = availableSlots.map(slot => new Date(slot.date));
   const handleDateChange = date => {
-    // Vérifier si la date sélectionnée est disponible
-    const isDateAvailable = availableSlots.some(slot =>
-      date.getFullYear() === new Date(slot).getFullYear() &&
-      date.getMonth() === new Date(slot).getMonth() &&
-      date.getDate() === new Date(slot).getDate()
-    );
-  
+    // Vérifiez si la date est disponible avant de la sélectionner
+    const isDateAvailable = availableSlots.some(availableDate => 
+      availableDate.getDate() === date.getDate() &&
+      availableDate.getMonth() === date.getMonth() &&
+      availableDate.getFullYear() === date.getFullYear());
+    
     if (isDateAvailable) {
-      setSelectedDate(date); // Met à jour l'état avec la date sélectionnée
+      setSelectedDate(date);
     } else {
-      // Si la date n'est pas disponible, informer l'utilisateur
       alert("Cette date n'est pas disponible. Veuillez en sélectionner une autre.");
     }
   };
   
   
-  
 
+  
+  
   const fetchAppointmentTypes = async () => {
     try {
       const response = await axios.get('http://localhost:8080/appointment-types/all');
-      setAppointmentTypes(response.data.appointmentTypes);
+      //setAppointmentTypes(response.data.appointmentTypes);
+      setAppointmentTypes(response.data);
     } catch (error) {
       console.error(error);
     }
   };
 
   const fetchPractitioners = async () => {
+    console.log(`Appointement type selected : ${selectedAppointmentType}`);
     try {
       const response = await axios.get('http://localhost:8080/practitioners', {
         params: {
@@ -144,13 +142,50 @@ const PraticionerDetails = () => {
       console.error(error);
     }
   };
+
+  
+  const fetchAvailableDates = async () => {
+    const appointmentTypeID = 23715014; 
+    const calendarID = 8758616;         
+    const month = '2024-01';           
+  
+    try {
+      const response = await axios.get('http://localhost:8080/fetch_appointment_dates', {
+        params: {
+          appointmentTypeID: appointmentTypeID,
+          month: month,
+          calendarID: calendarID
+        }
+      });
+      // Traiter la réponse...
+      const dates = response.data.map(dateObj => new Date(dateObj.date));
+      setAvailableSlots(dates);
+    } catch (error) {
+      console.error('Erreur lors de la récupération des dates disponibles :', error);
+      // Gérer l'erreur...
+      setAvailableSlots([]);
+    }
+  };
+  
+  
+  
+  
+  
+  useEffect(() => {
+    fetchAvailableDates();
+  }, [selectedAppointmentType, selectedCalendar]);
+  
   
   
 
+  
+    
+  
   const handleAppointmentTypeChange = (newAppointmentType) => {
     setSelectedAppointmentType(newAppointmentType);
     setPractitioners([]);
     fetchPractitioners();
+    console.log(`handleAppointmentTypeChange()\nnewAppointmentType : ${newAppointmentType}`);
   };
 
   useEffect(() => {
@@ -158,14 +193,12 @@ const PraticionerDetails = () => {
     fetchCalendars();
   }, []);
 
-useEffect(() => {
-  if (selectedCalendar) {
-    fetchAvailableSlots(selectedCalendar);
-  }
-}, [selectedCalendar]);
+  /*useEffect(() => {
+    if (selectedCalendar) {
+      fetchAvailableSlots(selectedCalendar);
+    }
+  }, [selectedCalendar]);*/
   
-  
-
   useEffect(() => {
     if (selectedAppointmentType) {
       fetchPractitioners();
@@ -185,7 +218,7 @@ useEffect(() => {
     get();
   }, [service, id]);
 
-  useEffect(() => {
+  /*useEffect(() => {
     const get = async () => {
       const date = new Date('2023-10-05').toISOString().split('T')[0];
 
@@ -195,141 +228,106 @@ useEffect(() => {
     };
 
     get();
-  }, [service]);
+  }, [service]);*/
+  
   const [showInput, setShowInput] = useState(false); // State to control the display of the input
+  
   return (
     practitioner === undefined ? <Loading /> :
-      <div className='bg-slate-100 h-screen w-screen overflow-y-auto'>
-        <Header />
-        <PresentationHeader practitioner={practitioner} />
-        <NavigationLinks />
-        <section className='flex gap-4 max-w-7xl py-4 px-0.5 mx-auto'>
-          <div className="flex flex-col gap-3">
-            <DetailsCard
-              id="#presentation"
-              icon={<AlignLeft className='w-4 h-4 text-cyan-600' />}
-              title="Présentation"
-            >
-              <p className="text-slate-600 text-sm mb-2 inter">
-                {practitioner.description}
-              </p>
-            </DetailsCard>
+    <div className='bg-slate-100 h-screen w-screen overflow-y-auto'>
+      <Header />
+      <PresentationHeader practitioner={practitioner} />
+      <NavigationLinks />
+      <section className='flex gap-4 max-w-7xl py-4 px-0.5 mx-auto'>
+        <div className="flex flex-col gap-3">
+          <DetailsCard id="#presentation" icon={<AlignLeft className='w-4 h-4 text-cyan-600' />} title="Présentation">
+            <p className="text-slate-600 text-sm mb-2 inter">{practitioner.description}</p>
+          </DetailsCard>
 
-            <DetailsCard
-              id="#openings_hours"
-              icon={<Clock className='w-4 h-4 text-cyan-600' />}
-              title="Horaires & contact"
-            >
-              <div className='grid grid-cols-2 gap-8'>
-                <div>
-                  <h5 className="text-slate-700 font-bold text-sm mb-2">
-                    Hours
-                  </h5>
-                  <p className="text-slate-600 text-sm mb-2 inter">
-                    {practitioner.openingHours}
-                  </p>
-                </div>
-
-                <div>
-                  <h5 className="text-slate-700 font-bold text-sm mb-2">
-                    Contact
-                  </h5>
-                  <p className="text-slate-600 text-sm mb-2 inter">
-                    {practitioner.contact}
-                  </p>
-                </div>
+          <DetailsCard id="#openings_hours" icon={<Clock className='w-4 h-4 text-cyan-600' />} title="Horaires & contact">
+            <div className='grid grid-cols-2 gap-8'>
+              <div>
+                <h5 className="text-slate-700 font-bold text-sm mb-2">Hours</h5>
+                <p className="text-slate-600 text-sm mb-2 inter">{practitioner.openingHours}</p>
               </div>
-            </DetailsCard>
+
+              <div>
+                <h5 className="text-slate-700 font-bold text-sm mb-2">Contact</h5>
+                <p className="text-slate-600 text-sm mb-2 inter">{practitioner.contact}</p>
+              </div>
+            </div>
+          </DetailsCard>
+        </div>
+        
+        <DetailsCard title="In summary ">
+          <div className="flex flex-col gap-2"> {/* Flex container for items in column */}
+            <div className="flex items-center">
+              <Heart className="w-4 h-4 text-cyan-600 mr-2" />
+              <p className="text-slate-600 text-sm mb-2 inter">Accepts new patients on  Free session</p>
+            </div>
+          
+          <div className="flex items-center">
+            <Home className="w-4 h-4 text-cyan-600 mr-2" />
+            <p className="text-slate-600 text-sm mb-2 inter">Au Millenium<br />390 Avenue des Abrivados, 34400 Lunel</p>
           </div>
-          <DetailsCard title="In summary ">
-  <div className="flex flex-col gap-2"> {/* Flex container for items in column */}
-    <div className="flex items-center">
-      <Heart className="w-4 h-4 text-cyan-600 mr-2" />
-      <p className="text-slate-600 text-sm mb-2 inter">
-        Accepts new patients on  Free session
-      </p>
-    </div>
-    <div className="flex items-center">
-      <Home className="w-4 h-4 text-cyan-600 mr-2" />
-      <p className="text-slate-600 text-sm mb-2 inter">
-        Au Millenium
-        <br />
-        390 Avenue des Abrivados, 34400 Lunel
-      </p>
-    </div>
-    <button
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                onClick={() => setShowInput(!showInput)}
-              >
-                Take Appointment
-              </button>
-    {showInput && (
-                   
-                <select
-                id="appointmentType"
-                value={selectedAppointmentType}
-                onChange={(e) => handleAppointmentTypeChange(e.target.value)}
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                required
-              >
-                <option value="">Choose appointment type</option>
-                {appointmentTypes.map((appointmentType) => (
+    
+          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={() => setShowInput(!showInput)}>Take Appointment</button>
+    
+          {showInput && (
+            <select id="appointmentType" value={selectedAppointmentType} onChange={(e) => handleAppointmentTypeChange(e.target.value)} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+              <option value="" disabled>Choose appointment type</option>
+              {
+                appointmentTypes.map((appointmentType) => (
                   <option key={appointmentType.id} value={appointmentType.id}>
                     {appointmentType.name}
                   </option>
-                ))}
-              </select>
-              )}
-
-
-
-{selectedAppointmentType && showInput && (
+                ))
+              }
+            </select>
+          )}
+          
+          {selectedAppointmentType && showInput && (
                    
-                   <select
-                   id="calendar"
-                   value={selectedCalendar}
-                   onChange={(e) => setSelectedCalendar(e.target.value)}
-                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                   required
-                 >
-                   <option value="">Choose calendar</option>
-                   {calendars.map((calendar) => (
-                     <option key={calendar.id} value={calendar.id}>
-                       {calendar.name}
-                     </option>
-                   ))}
-                 </select>
-                 )}
-{selectedCalendar && showInput && (
-  <Calendar
-    onChange={handleDateChange}
-    value={selectedDate} // Ajoutez cette ligne pour que le calendrier montre la date sélectionnée
-    tileClassName={({ date, view }) => {
-      // Vérifier si la vue est 'month' pour éviter de marquer les autres vues
-      if (view === 'month') {
-        // Convertir les slots disponibles en objets Date
-        const availableDates = availableSlots.map(slot => new Date(slot.date));
+            <select id="calendar" value={selectedCalendar} onChange={(e) => setSelectedCalendar(e.target.value)} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+              <option value="" disabled>Choose calendar</option>
+              {
+                calendars.map((calendar) => (
+                  <option key={calendar.id} value={calendar.id}>
+                    {calendar.name}
+                  </option>
+                ))
+              }
+            </select>
+          )}
 
-        // Trouver si la date est dans la liste des créneaux disponibles
-        const isDateAvailable = availableDates.some(availableDate =>
-          date.getFullYear() === availableDate.getFullYear() &&
-          date.getMonth() === availableDate.getMonth() &&
-          date.getDate() === availableDate.getDate()
-        );
-  
-        // Retourner une classe CSS en fonction de la disponibilité
-        return isDateAvailable ? 'availableDate' : 'unavailableDate';
-      }
-    }}
-    // D'autres props si nécessaire...
+{showInput && selectedCalendar && (
+  <Calendar
+  onChange={handleDateChange}
+  value={selectedDate}
+  tileDisabled={({ date, view }) => 
+    view === 'month' && !availableSlots.some(availableDate => 
+      availableDate.toISOString().slice(0, 10) === date.toISOString().slice(0, 10))
+  }
+    tileClassName={({ date, view }) => {
+  if (view === 'month') {
+    const dateString = date.toISOString().slice(0, 5);
+    if (!availableSlots.some(availableDate => availableDate.toISOString().slice(0, 10) === dateString)) {
+      return 'bg-gray-200 text-gray-500 cursor-not-allowed'; // classes for disabled dates
+    } else {
+      return 'bg-white text-gray-700 cursor-pointer hover:bg-blue-100'; // classes for available dates
+    }
+  }
+}}
   />
 )}
 
 
-  </div>
-</DetailsCard>
-        </section>
-      </div>
+
+          
+          </div>
+        </DetailsCard>
+      </section>
+    </div>
   );
 };
 
