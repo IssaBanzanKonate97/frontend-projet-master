@@ -93,7 +93,7 @@ const PraticionerDetails = () => {
   
   
   const handleDateChange = date => {
-    // Vérifiez si la date est disponible avant de la sélectionner
+  
     const isDateAvailable = availableSlots.some(availableDate => 
       availableDate.getDate() === date.getDate() &&
       availableDate.getMonth() === date.getMonth() &&
@@ -146,30 +146,36 @@ const PraticionerDetails = () => {
   
   const fetchAvailableDates = async () => {
     const appointmentTypeID = 23715014; 
-    const calendarID = 8758616;         
-    const month = '2024-01';           
+    const calendarID = 8758616;   
+    let allAvailableSlots = []; 
   
     try {
-      const response = await axios.get('http://localhost:8080/fetch_appointment_dates', {
-        params: {
-          appointmentTypeID: appointmentTypeID,
-          month: month,
-          calendarID: calendarID
-        }
-      });
-      // Traiter la réponse...
-      const dates = response.data.map(dateObj => new Date(dateObj.date));
-      setAvailableSlots(dates);
+      // Boucle sur chaque mois de l'année
+      for (let month = 1; month <= 12; month++) {
+        // Formatage du mois au format 'YYYY-MM'
+        const monthFormatted = `2024-${month.toString().padStart(2, '0')}`;
+  
+        // Appel à l'API pour chaque mois
+        const response = await axios.get('http://localhost:8080/fetch_appointment_dates', {
+          params: {
+            appointmentTypeID: appointmentTypeID,
+            month: monthFormatted,
+            calendarID: calendarID
+          }
+        });
+  
+       
+        const dates = response.data.map(dateObj => new Date(dateObj.date));
+        allAvailableSlots = [...allAvailableSlots, ...dates];
+      }
+  
+      
+      setAvailableSlots(allAvailableSlots);
     } catch (error) {
       console.error('Erreur lors de la récupération des dates disponibles :', error);
-      // Gérer l'erreur...
-      setAvailableSlots([]);
+      setAvailableSlots([]); 
     }
   };
-  
-  
-  
-  
   
   useEffect(() => {
     fetchAvailableDates();
@@ -230,7 +236,7 @@ const PraticionerDetails = () => {
     get();
   }, [service]);*/
   
-  const [showInput, setShowInput] = useState(false); // State to control the display of the input
+  const [showInput, setShowInput] = useState(false); 
   
   return (
     practitioner === undefined ? <Loading /> :
@@ -260,7 +266,7 @@ const PraticionerDetails = () => {
         </div>
         
         <DetailsCard title="In summary ">
-          <div className="flex flex-col gap-2"> {/* Flex container for items in column */}
+          <div className="flex flex-col gap-2"> 
             <div className="flex items-center">
               <Heart className="w-4 h-4 text-cyan-600 mr-2" />
               <p className="text-slate-600 text-sm mb-2 inter">Accepts new patients on  Free session</p>
@@ -312,9 +318,9 @@ const PraticionerDetails = () => {
   if (view === 'month') {
     const dateString = date.toISOString().slice(0, 5);
     if (!availableSlots.some(availableDate => availableDate.toISOString().slice(0, 10) === dateString)) {
-      return 'bg-gray-200 text-gray-500 cursor-not-allowed'; // classes for disabled dates
+      return 'bg-gray-200 text-gray-500 cursor-not-allowed'; 
     } else {
-      return 'bg-white text-gray-700 cursor-pointer hover:bg-blue-100'; // classes for available dates
+      return 'bg-white text-gray-700 cursor-pointer hover:bg-blue-100'; 
     }
   }
 }}
