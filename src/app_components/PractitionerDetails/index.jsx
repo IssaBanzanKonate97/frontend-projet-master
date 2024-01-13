@@ -61,6 +61,7 @@ const PraticionerDetails = () => {
           practitioner: selectedPractitioner,
           calendar: selectedCalendar,
           date: selectedDate.toISOString().split('T')[0],
+          time: selectedTime,
         },
         {
           headers: {
@@ -281,7 +282,7 @@ const PraticionerDetails = () => {
             <p className="text-slate-600 text-sm mb-2 inter">Au Millenium<br />390 Avenue des Abrivados, 34400 Lunel</p>
           </div>
     
-          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={() => setShowInput(!showInput)}>Take Appointment</button>
+          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={() => setShowInput(!showInput)}>Book an Appointment</button>
     
           {showInput && (
             <select id="appointmentType" value={selectedAppointmentType} onChange={(e) => handleAppointmentTypeChange(e.target.value)} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
@@ -394,15 +395,22 @@ const PraticionerDetails = () => {
             onChange={(e) => setEmail(e.target.value)}
             value={email}
           />
-        </div>
-      </div>
-    </div>
-  )}
-
-
-
-
           
+        </div>
+        <button
+      type="submit"
+      className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-500 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 w-full"
+      onClick={handleSubmit} // Mettez à jour cette fonction pour gérer la soumission du formulaire
+    >
+      Take Appointment
+    </button>
+        
+      </div>
+      
+    </div>
+    
+  )}
+  
           </div>
         </DetailsCard>
       </section>
