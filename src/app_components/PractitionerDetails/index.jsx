@@ -35,6 +35,7 @@ const PraticionerDetails = () => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [availableTimes, setAvailableTimes] = useState([]);
   const [selectedTime, setSelectedTime] = useState(null);
+  
 
 
   
