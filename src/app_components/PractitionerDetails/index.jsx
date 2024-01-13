@@ -33,6 +33,10 @@ const PraticionerDetails = () => {
   const [selectedCalendar, setSelectedCalendar] = useState('');
   const [availableSlots, setAvailableSlots] = useState([]);
   const [selectedDate, setSelectedDate] = useState(null);
+  const [availableTimes, setAvailableTimes] = useState([]);
+  const [selectedTime, setSelectedTime] = useState(null);
+
+
   
  
 
@@ -90,24 +94,11 @@ const PraticionerDetails = () => {
       }
     }
   };*/
-  
-  
-  const handleDateChange = date => {
-  
-    const isDateAvailable = availableSlots.some(availableDate => 
-      availableDate.getDate() === date.getDate() &&
-      availableDate.getMonth() === date.getMonth() &&
-      availableDate.getFullYear() === date.getFullYear());
+  const handleDateChange = (date) => {
     
-    if (isDateAvailable) {
-      setSelectedDate(date);
-    } else {
-      alert("Cette date n'est pas disponible. Veuillez en sélectionner une autre.");
-    }
+    setSelectedDate(date);
+    fetchAvailableTimes(date);
   };
-  
-  
-
   
   
   const fetchAppointmentTypes = async () => {
@@ -183,7 +174,36 @@ const PraticionerDetails = () => {
   
   
   
-
+  const fetchAvailableTimes = async (date) => {
+    const formattedDate = date.toISOString().split('T')[0];
+    try {
+      const response = await axios.get('http://localhost:8080/fetch_appointment_times', {
+        params: {
+          appointmentTypeID: selectedAppointmentType,
+          calendarID: selectedCalendar,
+          date: formattedDate,
+        },
+      });
+      // Conversion des horaires en format HH:mm
+      const timesInParis = response.data.map((timeSlot) => {
+        // Créez une date JavaScript avec la date et l'heure
+        let dateTime = new Date(timeSlot.time);
+        // Les heure locale (GMT+1 pour Paris)
+        let timeString = dateTime.toLocaleTimeString('fr-FR', { 
+          hour: '2-digit', 
+          minute: '2-digit', 
+          timeZone: 'Europe/Paris' 
+        });
+        return { ...timeSlot, time: timeString };
+      });
+      setAvailableTimes(timesInParis);
+    } catch (error) {
+      console.error('Error fetching available times:', error);
+      setAvailableTimes([]);
+    }
+  };
+  
+  
   
     
   
@@ -199,11 +219,7 @@ const PraticionerDetails = () => {
     fetchCalendars();
   }, []);
 
-  /*useEffect(() => {
-    if (selectedCalendar) {
-      fetchAvailableSlots(selectedCalendar);
-    }
-  }, [selectedCalendar]);*/
+
   
   useEffect(() => {
     if (selectedAppointmentType) {
@@ -224,18 +240,6 @@ const PraticionerDetails = () => {
     get();
   }, [service, id]);
 
-  /*useEffect(() => {
-    const get = async () => {
-      const date = new Date('2023-10-05').toISOString().split('T')[0];
-
-      const slots = await service.getAvailableSlots(date);
-
-      console.log('slots', slots);
-    };
-
-    get();
-  }, [service]);*/
-  
   const [showInput, setShowInput] = useState(false); 
   
   return (
@@ -306,26 +310,95 @@ const PraticionerDetails = () => {
             </select>
           )}
 
+
+
 {showInput && selectedCalendar && (
-  <Calendar
-  onChange={handleDateChange}
-  value={selectedDate}
-  tileDisabled={({ date, view }) => 
-    view === 'month' && !availableSlots.some(availableDate => 
-      availableDate.toISOString().slice(0, 10) === date.toISOString().slice(0, 10))
-  }
-    tileClassName={({ date, view }) => {
-  if (view === 'month') {
-    const dateString = date.toISOString().slice(0, 5);
-    if (!availableSlots.some(availableDate => availableDate.toISOString().slice(0, 10) === dateString)) {
-      return 'bg-gray-200 text-gray-500 cursor-not-allowed'; 
-    } else {
-      return 'bg-white text-gray-700 cursor-pointer hover:bg-blue-100'; 
-    }
-  }
-}}
-  />
+  <div className="flex space-x-4">
+    <Calendar
+      onChange={handleDateChange}
+      value={selectedDate}
+      tileDisabled={({ date, view }) => 
+        view === 'month' && !availableSlots.some(availableDate => 
+          availableDate.toISOString().slice(0, 10) === date.toISOString().slice(0, 10))
+      }
+      className="react-calendar" 
+    />
+    {selectedDate && availableTimes.length > 0 && (
+      <div className="flex flex-col bg-white shadow rounded-md overflow-hidden">
+        <div className="overflow-y-auto" style={{ maxHeight: '200px' }}>
+          {availableTimes.map((timeSlot, index) => {
+            //timeSlot.time au format HH:mm
+            return (
+              <label key={index} className="flex items-center border-b last:border-b-0 px-4 py-2 cursor-pointer">
+                <input
+                  type="radio"
+                  name="time"
+                  value={timeSlot.time}
+                  className="form-radio text-blue-600"
+                  onChange={() => setSelectedTime(timeSlot.time)}
+                />
+
+                <span className="ml-2 text-sm text-gray-700">{timeSlot.time}</span>
+              </label>
+            );
+          })}
+        </div>
+      </div>
+    )}
+  </div>
 )}
+
+{selectedTime  && (
+    <div className="mt-4">
+      <div className="flex flex-col space-y-4">
+        <div>
+          <label htmlFor="firstName" className="block text-sm font-medium text-gray-700">First Name *</label>
+          <input
+            type="text"
+            id="firstName"
+            name="firstName"
+            autoComplete="given-name"
+            placeholder="Your first name"
+            required
+            className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            onChange={(e) => setName(e.target.value)}
+            value={name}
+          />
+        </div>
+        
+        <div>
+          <label htmlFor="lastName" className="block text-sm font-medium text-gray-700">Last Name *</label>
+          <input
+            type="text"
+            id="lastName"
+            name="lastName"
+            autoComplete="family-name"
+            placeholder="Your last name"
+            required
+            className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            // Assume you have a state for lastName to update it
+            // onChange={(e) => setLastName(e.target.value)}
+          />
+        </div>
+        
+        <div>
+          <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email *</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            autoComplete="email"
+            placeholder="Your email address"
+            required
+            className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            onChange={(e) => setEmail(e.target.value)}
+            value={email}
+          />
+        </div>
+      </div>
+    </div>
+  )}
+
 
 
 
