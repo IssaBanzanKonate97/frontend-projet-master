@@ -14,32 +14,31 @@ const Contact = () => {
   const [message, setMessage] = useState('');
 
   const handleSubmit = async (event) => {
-    event.preventDefault(); // Empêche le rechargement de la page
+    event.preventDefault(); 
 
-    // L'objet à envoyer au serveur
+    
     const contactData = { name, email, message };
+    console.log('Submitting form', { name, email, message }); 
 
     try {
-      const response = await axios.post(('http://localhost:8080/api/contact'), {
-
-        method: 'POST',
+      
+      const response = await axios.post('http://localhost:8080/api/contact', contactData, {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(contactData),
       });
 
-      if (response.ok) {
-        // Si le serveur renvoie une réponse positive
-        const responseData = await response.json();
-        // Traitez la réponse, par exemple en affichant un message de succès
-        console.log(responseData);
+      
+      if (response.status === 200) {
+        
+        console.log('Message sent successfully', response.data);
+       
       } else {
-        // Gérez les réponses d'erreur du serveur
+        
         console.error('Server responded with an error:', response);
       }
     } catch (error) {
-      // Gérez les erreurs de réseau/connexion
+      
       console.error('There was an error sending the contact data:', error);
     }
   };
@@ -62,7 +61,7 @@ const Contact = () => {
 
         <div className="flex justify-between mt-8">
           <div className="max-w-xl w-full">
-            <form className="w-full">
+          <form className="w-full" onSubmit={handleSubmit}>
               <div className="mb-4">
                 <label htmlFor="name" className="block text-sm font-medium text-gray-600">
                   Name
@@ -71,8 +70,10 @@ const Contact = () => {
                   type="text"
                   id="name"
                   name="name"
-                  className="mt-1 p-3 w-full border rounded-md"
+                  value={name}
+                  className="mt-1 p-3 w-full border rounded-md text-black placeholder-gray-500"
                   placeholder="Votre nom"
+                  onChange={(e) => setName(e.target.value)}
                 />
               </div>
               <div className="mb-4">
@@ -83,8 +84,11 @@ const Contact = () => {
                   type="email"
                   id="email"
                   name="email"
-                  className="mt-1 p-3 w-full border rounded-md"
+                  value={email}
+    
+                  className="mt-1 p-3 w-full border rounded-md text-black placeholder-gray-500"
                   placeholder="Votre adresse e-mail"
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
               <div className="mb-4">
@@ -95,8 +99,10 @@ const Contact = () => {
                   id="message"
                   name="message"
                   rows="4"
-                  className="mt-1 p-3 w-full border rounded-md"
+                  value={message}
+                  className="mt-1 p-3 w-full border rounded-md text-black placeholder-gray-500"
                   placeholder="Votre message"
+                  onChange={(e) => setMessage(e.target.value)}
                 ></textarea>
               </div>
               <div className="mb-4">
