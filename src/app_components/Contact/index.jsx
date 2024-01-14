@@ -7,6 +7,8 @@ import WorkingRemotelyImage2 from '../../assets/tire-removebg-preview.png';
 import axios from 'axios';
 import { useEffect } from 'react';
 import { useState } from 'react';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Contact = () => {
   const [name, setName] = useState('');
@@ -21,25 +23,20 @@ const Contact = () => {
     console.log('Submitting form', { name, email, message }); 
 
     try {
-      
-      const response = await axios.post('http://localhost:8080/api/contact', contactData, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-
-      
+      const response = await axios.post('http://localhost:8080/api/contact', contactData);
       if (response.status === 200) {
         
-        console.log('Message sent successfully', response.data);
-       
-      } else {
+        setName('');
+        setEmail('');
+        setMessage('');
+  
         
-        console.error('Server responded with an error:', response);
+        toast.success("Votre message a été envoyé avec succès!");
       }
     } catch (error) {
-      
       console.error('There was an error sending the contact data:', error);
+      
+      toast.error("Une erreur s'est produite lors de l'envoi du message.");
     }
   };
   return (
