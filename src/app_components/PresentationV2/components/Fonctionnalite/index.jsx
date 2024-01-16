@@ -2,39 +2,42 @@ import React from 'react';
 
 const Fonctionnalite = () => {
   return (
-    <div className="flex mt-4">
-      <div className="p-4 rounded-md">
-        <h1 className="text-3xl font-bold text-black">
-          Discover our institute specialized in addiction treatment.
-        </h1>
-        <p className="text-black">
-          Personalized practitioners to guide you towards significant improvement.
-        </p>
-        <button className="border-2 border-pink-500 rounded-full px-4 py-2 mt-4 text-pink-500 hover:bg-pink-500 hover:text-white">
+    <div className="max-w-5xl mx-auto my-5 p-5">
+      <div className="flex items-start justify-between">
+       
+        <div className="space-y-4">
+          <h2 className="text-4xl font-bold text-black">
+          Discover our institute
+          </h2>
+          <p className="text-black font-bold">
+          Personalized practitioners to guide you towards significant improvement..
+          </p>
+          <button className="border-2 border-orange-500 rounded-full px-4 py-2 text-orange-500 hover:bg-orange-500 hover:text-white">
           All specialties
-        </button>
-      </div>
-      <div className="flex ml-auto">
-        <div className="p-4 rounded-md mr-4 text-center">
-          {/* Photo 1 */}
-          <img src="/src/assets/tita.jpeg" alt="Photo 1" className="w-32 h-32 object-cover rounded-md" />
-          <p className="font-bold mt-2">Hypnosis</p>
-          <p className="mt-2">Recommended by 18% <br /> of our users</p>
-
+          </button>
         </div>
-        <div className="p-4 rounded-md mr-4 text-center">
-          {/* Photo 2 */}
-          <img src="/src/assets/image-scaled.jpeg" alt="Photo 2" className="w-32 h-32 object-cover rounded-md" />
-          <p className="font-bold mt-2">Hypnosis</p>
-          <p className="mt-2">Recommended by 18% <br /> of our users</p>
-
-        </div>
-        <div className="p-4 rounded-md text-center">
-          {/* Photo 3 */}
-          <img src="/src/assets/loup.jpeg" alt="Photo 3" className="w-32 h-32 object-cover rounded-md" />
-          <p className="font-bold mt-2">Hypnosis</p>
-          <p className="mt-2">Recommended by 18% <br /> of our users</p>
-
+        {/* Galerie pour mes images */}
+        <div className="flex overflow-x-auto space-x-1">
+          
+          <div className="min-w-max p-4 rounded-md text-center flex flex-col justify-center items-center">
+           
+            <img src="/src/assets/tita.jpeg" alt="Ayurveda" className="w-32 h-32 object-cover rounded-md" />
+            <p className="font-bold mt-2">Addiction</p>
+            <p className="mt-1">all about <br /> alcoholism</p>
+          </div>
+          
+          <div className="min-w-max p-4 rounded-md text-center flex flex-col justify-center items-center">
+            <img src="/src/assets/image-scaled.jpeg" alt="Hypnose" className="w-32 h-32 object-cover rounded-md" />
+            <p className="font-bold mt-2">Tabacco</p>
+            <p className="mt-1">How to stop <br /> smoking?</p>
+          </div>
+          
+          <div className="min-w-max p-4 rounded-md text-center flex flex-col justify-center items-center">
+            <img src="/src/assets/loup.jpeg" alt="Énergétique Traditionnelle Chinoise" className="w-32 h-32 object-cover rounded-md" />
+            <p className="font-bold mt-2">Drug</p>
+            <p className="mt-1">addiction and<br /> drug dependence</p>
+            </div>
+            
         </div>
       </div>
     </div>

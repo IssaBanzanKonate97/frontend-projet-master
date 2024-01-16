@@ -2,12 +2,12 @@ import React from 'react';
 import Logo1 from '../../../../assets/reassurance-experience-removebg-preview.png';
 import Logo2 from '../../../../assets/reassurance-recommendation-removebg-preview.png';
 import Logo3 from '../../../../assets/reassurance-avis-removebg-preview.png';
-import TitaImage from '/src/assets/tita.jpeg'; // Make sure the path is correct
+import TitaImage from '/src/assets/tita.jpeg'; 
 
 const FeatureSection = () => {
   return (
     <div className="relative">
-      {/* Single wave top border SVG */}
+     
       <div className="absolute top-0 left-0 right-0">
         <svg viewBox="0 0 1200 50" preserveAspectRatio="none">
           <path
@@ -18,15 +18,15 @@ const FeatureSection = () => {
       </div>
 
       
-      <div className="bg-blue-200 flex mt-4 p-4 rounded-md pt-12"> 
+      <div className="bg-slate-500 flex mt-4 p-4 rounded-md pt-12"> 
         <div className="rounded-lg">
-          <h1 className="text-3xl font-bold text-black">
+          <h1 className="text-3xl font-bold text-white">
           Take action for your well-being.
           </h1>
 
-          <p className="text-lg text-left mb-8">
+          <p className="mt-5 text-white text-left mb-8">
           Oser le Changement is an institution<br /> dedicated to supporting and helping individuals facing addictions<br /> such as alcohol, tobacco...We enable everyone to take control of their health and well-being<br /> by facilitating access to complementary practices.<br /> Oser le changement aims to inform, provide honest understanding,<br /> and empower individuals to make informed choices, fully aware of the risks and benefits.<br /> 
-            <a href="#" className="text-pink-500 hover:underline">
+            <a href="#" className="text-white-500 hover:underline">
             Learn more about our purpose and mission
             </a>.
           </p>
@@ -62,6 +62,7 @@ const FeatureSection = () => {
           <img src={Logo3} alt="Logo 3" className="w-8 h-8 rounded-full mr-2" />
           <p className="font-bold text-black">Verified Trainings and Experiences</p>
         </div>
+        
       </div>
     
       </div>

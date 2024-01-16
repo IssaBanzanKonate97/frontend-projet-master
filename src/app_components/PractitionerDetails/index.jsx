@@ -56,7 +56,7 @@ const PraticionerDetails = () => {
         'http://localhost:8080/api/bookings',
         {
           name,
-          phone,
+         
           email,
           appointmentType: selectedAppointmentType,
           practitioner: selectedPractitioner,
@@ -105,7 +105,7 @@ const PraticionerDetails = () => {
   
   const fetchAppointmentTypes = async () => {
     try {
-      const response = await axios.get('http://localhost:8080/appointment-types/all');
+      const response = await axios.get('http://localhost:4000/appointment-types/all');
       //setAppointmentTypes(response.data.appointmentTypes);
       setAppointmentTypes(response.data);
     } catch (error) {
@@ -116,7 +116,7 @@ const PraticionerDetails = () => {
   const fetchPractitioners = async () => {
     console.log(`Appointement type selected : ${selectedAppointmentType}`);
     try {
-      const response = await axios.get('http://localhost:8080/practitioners', {
+      const response = await axios.get('http://localhost:4000/practitioners', {
         params: {
           appointmentType: selectedAppointmentType,
         },
@@ -129,7 +129,7 @@ const PraticionerDetails = () => {
 
   const fetchCalendars = async () => {
     try {
-      const response = await axios.get('http://localhost:8080/calendars/all');
+      const response = await axios.get('http://localhost:4000/calendars/all');
       setCalendars(response.data.calendars);
     } catch (error) {
       console.error(error);
@@ -149,7 +149,7 @@ const PraticionerDetails = () => {
         const monthFormatted = `2024-${month.toString().padStart(2, '0')}`;
   
         // Appel à l'API pour chaque mois
-        const response = await axios.get('http://localhost:8080/fetch_appointment_dates', {
+        const response = await axios.get('http://localhost:4000/fetch_appointment_dates', {
           params: {
             appointmentTypeID: appointmentTypeID,
             month: monthFormatted,
@@ -179,7 +179,7 @@ const PraticionerDetails = () => {
   const fetchAvailableTimes = async (date) => {
     const formattedDate = date.toISOString().split('T')[0];
     try {
-      const response = await axios.get('http://localhost:8080/fetch_appointment_times', {
+      const response = await axios.get('http://localhost:4000/fetch_appointment_times', {
         params: {
           appointmentTypeID: selectedAppointmentType,
           calendarID: selectedCalendar,

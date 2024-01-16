@@ -2,34 +2,40 @@ import React from 'react';
 
 const Fonctionnalite2 = () => {
   return (
-    <div className="flex mt-4">
-      <div className="p-4 rounded-md">
-        <h1 className="text-3xl font-bold text-black">
-            Our practitioners accompany you<br /> to act for your well-being.
-        </h1>
+    <div className="max-w-5xl mx-auto my-5 p-5 mt-10">
+      <div className="flex items-start justify-between">
         
-        <button className="border-2 border-pink-500 rounded-full px-4 py-2 mt-4 text-pink-500 hover:bg-pink-500 hover:text-white">
-            All disorders
-        </button>
-      </div>
-      <div className="flex ml-auto">
-        <div className="p-4 rounded-md mr-4 text-center">
-          {/* Photo 1 */}
-          <img src="/src/assets/tita.jpeg" alt="Photo 1" className="w-32 h-32 object-cover rounded-md" />
-          <p className="font-bold mt-2">Hypnosis</p>
-          <p className="mt-2">Récommandé par 18% <br /> de nos utilisateurs</p>
+        <div className="space-y-4">
+          <h2 className="text-3xl font-bold text-black">
+          Our practitioners<br /> accompany you<br /> to act for your well-being.
+          </h2>
+          
+          <button className="border-2 border-orange-500 rounded-full px-4 py-2 text-orange-500 hover:bg-orange-500 hover:text-white">
+          All disorders
+          </button>
         </div>
-        <div className="p-4 rounded-md mr-4 text-center">
-          {/* Photo 2 */}
-          <img src="/src/assets/image-scaled.jpeg" alt="Photo 2" className="w-32 h-32 object-cover rounded-md" />
-          <p className="font-bold mt-2">Hypnosis</p>
-          <p className="mt-2">Récommandé par 18% <br /> de nos utilisateurs</p>
-        </div>
-        <div className="p-4 rounded-md text-center">
-          {/* Photo 3 */}
-          <img src="/src/assets/loup.jpeg" alt="Photo 3" className="w-32 h-32 object-cover rounded-md" />
-          <p className="font-bold mt-2">Hypnosis</p>
-          <p className="mt-2">Récommandé par 18% <br /> de nos utilisateurs</p>
+        {/* Galerie pour mes images */}
+        <div className="flex overflow-x-auto space-x-1">
+          
+          <div className="min-w-max p-4 rounded-md text-center flex flex-col justify-center items-center">
+            {/* Photo 1 */}
+            <img src="/src/assets/tita.jpeg" alt="Ayurveda" className="w-32 h-32 object-cover rounded-md" />
+            <p className="font-bold mt-2">Ayurveda</p>
+            <p className="mt-2">Recommended by 18% <br /> of our users</p>
+          </div>
+          
+          <div className="min-w-max p-4 rounded-md text-center flex flex-col justify-center items-center">
+            <img src="/src/assets/image-scaled.jpeg" alt="Hypnose" className="w-32 h-32 object-cover rounded-md" />
+            <p className="font-bold mt-2">Hypnose</p>
+            <p className="mt-2">Recommended by 18% <br /> of our users</p>
+          </div>
+          
+          <div className="min-w-max p-4 rounded-md text-center flex flex-col justify-center items-center">
+            <img src="/src/assets/loup.jpeg" alt="Énergétique Traditionnelle Chinoise" className="w-32 h-32 object-cover rounded-md" />
+            <p className="font-bold mt-2">Hypnose</p>
+            <p className="mt-2">Recommended by 18% <br /> of our users</p>
+            </div>
+            
         </div>
       </div>
     </div>

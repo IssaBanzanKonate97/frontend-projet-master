@@ -1,4 +1,4 @@
-import app_logo from "../../assets/logo.png";
+import app_logo from '../../assets/Blue_Blob_Health_Care_Logo_4_-removebg-preview.png';
 
 function Loading({ message, showLoader = true }) {
     return (

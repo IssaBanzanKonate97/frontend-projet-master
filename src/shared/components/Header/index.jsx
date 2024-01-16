@@ -1,5 +1,5 @@
 
-import logo from '../../../assets/Blue_Blob_Health_Care_Logo_3_-removebg-preview.png';
+import logo from '../../../assets/Blue_Blob_Health_Care_Logo_4_-removebg-preview.png';
 import { Heart, Home, Phone, Users } from 'react-feather';
 
 const navigationLinks = [
@@ -26,7 +26,7 @@ const navigationLinks = [
 function Header() {
     return (
         <header>
-            <nav className="p-3 bg-white rounded-lg m-1 flex flex-row justify-between max-w-7xl mx-auto">
+            <nav className="p-3 bg-slate-500 m-1 flex flex-row justify-between max-w-8xl mx-auto">
                 <a className="navbar-brand" href="#">
                     <img src={logo} alt="logo" className="h-10" />
                 </a>
