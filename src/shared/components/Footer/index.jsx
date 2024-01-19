@@ -22,21 +22,21 @@ const Footer = () => {
             <li className="mb-1"><a href="/media" className="hover:underline">Médoucine in the media</a></li>
             <li className="mb-1"><a href="/practitioners" className="hover:underline">Our practitioners by city</a></li>
             <li className="mb-1"><a href="/videos" className="hover:underline">Videos</a></li>
-              {/* Add other list items */}
+              
             </ul>
           </div>
           <div>
             <h5 className="text-lg font-semibold mb-2">Institutadios commits</h5>
             <ul>
-             <li className="mb-1"><a href="/How do we collect our reviews?" className="hover:underline">How do we collect our reviews?</a></li>
-              {/* Add other list items */}
+             <li className="mb-1"><a href="?" className="hover:underline">How do we collect our reviews?</a></li>
+              
             </ul>
           </div>
           <div>
             <h5 className="text-lg font-semibold mb-2">Rejoin us</h5>
             <ul>
             <li className="mb-1"><a href="/We are hiring" className="hover:underline">We are hiring</a></li>
-              {/* Add other list items */}
+              
             </ul>
           </div>
         </div>

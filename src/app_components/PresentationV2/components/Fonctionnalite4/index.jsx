@@ -1,5 +1,6 @@
 import React from 'react';
 import TitaImage from '/src/assets/tita.jpeg'; 
+import PlayIcon from '/src/assets/189638-removebg-preview.png'; // Ensure you have a play icon image in your assets
 
 
 const testimonials = [
@@ -32,41 +33,40 @@ const testimonials = [
 
 const TestimonialsSection = () => {
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="text-center">
-        <h2 className="text-2xl text-black font-bold">They talk about </h2>
-        <div className="mt-1 flex justify-center">
+    <div className="bg-slate-500 rounded-md pt-12 pb-8 px-4">
+      <div className="text-center mb-4"> 
+        <h2 className="text-2xl text-white font-bold">They talk about us</h2>
+        <div className="flex justify-center items-center mt-1">
           <div className="text-yellow-400">⭐⭐⭐⭐⭐</div>
-          <span className="ml-2 text-gray-600">1089 Google</span>
+          <span className="ml-2 text-white">1089 Google</span>
         </div>
       </div>
-
-      <div className="flex overflow-x-auto py-8 max-w-5xl mx-auto">
+      <div className="flex flex-wrap justify-center overflow-x-auto py-8 mx-auto max-w-3xl">
         {testimonials.map((testimonial, index) => (
           <div key={index} className="flex-none w-1/4 px-2">
-            <div className="bg-white p-4 rounded-lg shadow">
-              <img                 
+            <div className="bg-slate-500 p-4 rounded-lg shadow relative">
+              <img
                 src={testimonial.imageUrl}
                 alt={testimonial.name}
                 className="w-full h-48 object-cover rounded-lg"
               />
               <button
                 onClick={() => {
-                  // Implement play video logic
+                  
                 }}
-                className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+                className="absolute bottom-0 right-0 mb-4 mr-4"
                 aria-label={`Play ${testimonial.name}'s video`}
               >
                 <img
-                  src=""
-                  alt=""
-                  className="w-10 h-10"
+                  src={PlayIcon}
+                  alt="Play video"
+                  className="w-12 h-12"
                 />
               </button>
             </div>
-            <div className="mt-2 text-center">
-              <h3 className="text-lg font-semibold">{testimonial.name}</h3>
-              <p className="text-sm text-gray-600">{testimonial.role}</p>
+            <div className="text-center mt-2">
+              <h3 className="text-lg font-semibold text-white">{testimonial.name}</h3>
+              <p className="text-sm text-white">{testimonial.role}</p>
             </div>
           </div>
         ))}
@@ -76,5 +76,3 @@ const TestimonialsSection = () => {
 };
 
 export default TestimonialsSection;
-
-               

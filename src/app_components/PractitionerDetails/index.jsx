@@ -20,135 +20,144 @@ import axios from 'axios';
 
 
 const PraticionerDetails = () => {
-  const [name, setName] = useState('');
-  const [phone, setPhone] = useState('');
-  const [email, setEmail] = useState('');
+ 
+ 
   const [selectedAppointmentType, setSelectedAppointmentType] = useState('');
   const [appointmentTypes, setAppointmentTypes] = useState([]);
-  const [practitioners, setPractitioners] = useState([]);
   const [calendars, setCalendars] = useState([]);
-
-  const [selectedPractitioner, setSelectedPractitioner] = useState('');
-  
   const [selectedCalendar, setSelectedCalendar] = useState('');
   const [availableSlots, setAvailableSlots] = useState([]);
   const [selectedDate, setSelectedDate] = useState(null);
   const [availableTimes, setAvailableTimes] = useState([]);
   const [selectedTime, setSelectedTime] = useState(null);
-  
-
-
-  
- 
-
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
   const { id } = useParams();
   
-
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      if (!selectedDate) {
-        console.error('Veuillez sélectionner une date et une heure pour le rendez-vous.');
+  e.preventDefault();
+  console.log("Selected Appointment Type ID:", selectedAppointmentType);
+   console.log("Selected calendar:", selectedCalendar);
+    console.log("Selected date:", selectedDate);
+    console.log("Selected time:", selectedTime);
+  console.log("Submitting form");
+  try {
+    if (!selectedDate || !selectedTime || !selectedAppointmentType) {
+      console.error('Veuillez sélectionner une date, une heure et un type de rendez-vous pour le rendez-vous.');
+      return;
+    }
+      
+      if (!(selectedDate instanceof Date)) {
+        console.error('La date sélectionnée est invalide.');
         return;
-      }
-
-      const response = await axios.post(
-        'http://localhost:8080/api/bookings',
-        {
-          name,
-         
-          email,
-          appointmentType: selectedAppointmentType,
-          practitioner: selectedPractitioner,
-          calendar: selectedCalendar,
-          date: selectedDate.toISOString().split('T')[0],
-          time: selectedTime,
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      );
-      console.log(response.data);
-    } catch (error) {
-      console.error(error);
     }
-  };
 
-  /*const fetchAvailableSlots = async (calendarId, selectedDate) => {
-    if (calendarId && selectedDate) {
-      try {
-        // Formater selectedDate au format ISO 8601 (YYYY-MM-DD)
-        const formattedDate = selectedDate.toISOString().split('T')[0];
-  
-        const response = await axios.get('http://localhost:8080/availability', {
-          params: {
-            appointmentTypeID: calendarId, // Assurez-vous que le nom correspond à celui attendu par le back-end
-            datetime: formattedDate, // Vous devez passer la date sélectionnée
-          },
-        });
-        
-        setAvailableSlots(response.data.data); // Assurez-vous que c'est le bon chemin dans la réponse
-      } catch (error) {
-        console.error('Error fetching available dates:', error);
-        setAvailableSlots([]);
-      }
-    }
-  };*/
-  const handleDateChange = (date) => {
     
+    const formatDate = (date) => {
+      if (!(date instanceof Date)) return '';
+  
+      const year = date.getFullYear();
+      const month = (date.getMonth() + 1).toString().padStart(2, '0'); 
+      const day = date.getDate().toString().padStart(2, '0'); 
+  
+      return `${year}-${month}-${day}`;
+    };
+    const formattedDate = formatDate(selectedDate);
+  console.log('Formatdate', formattedDate);
+
+    
+ 
+    const response = await axios.post(
+      'http://localhost:4000/api/book-appointment',
+      {
+        firstName,
+        lastName,
+        email,
+        phone,
+        appointmentTypeID: selectedAppointmentType,
+        calendar: selectedCalendar,
+        date: formattedDate,
+        time: selectedTime,
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+    console.log(response.data);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+
+ 
+  const handleDateChange = (date) => {
+    console.log('issa')
+    console.log(date)
     setSelectedDate(date);
     fetchAvailableTimes(date);
   };
   
   
   const fetchAppointmentTypes = async () => {
-    try {
-      const response = await axios.get('http://localhost:4000/appointment-types/all');
-      //setAppointmentTypes(response.data.appointmentTypes);
-      setAppointmentTypes(response.data);
-    } catch (error) {
-      console.error(error);
+  try {
+    const response = await axios.get('http://localhost:4000/appointment-types/all');
+    const specificAppointmentType = response.data.filter(appointmentType => appointmentType.id === 23715014);
+    setAppointmentTypes(specificAppointmentType);
+    
+    if (specificAppointmentType.length > 0) {
+      setSelectedAppointmentType(specificAppointmentType[0].id);
     }
-  };
+  } catch (error) {
+    console.error(error);
+  }
+};
 
-  const fetchPractitioners = async () => {
-    console.log(`Appointement type selected : ${selectedAppointmentType}`);
-    try {
-      const response = await axios.get('http://localhost:4000/practitioners', {
-        params: {
-          appointmentType: selectedAppointmentType,
-        },
-      });
-      setPractitioners(response.data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  
+const handleAppointmentTypeChange = (e) => {
+  const appointmentTypeId = e.target.value;
+
+  setSelectedAppointmentType(appointmentTypeId);
+};
+
+ useEffect(() => {
+  console.log(`Le type de rendez-vous sélectionné est: ${selectedAppointmentType}`);
+}, [selectedAppointmentType]);
+
+  
+
 
   const fetchCalendars = async () => {
-    try {
-      const response = await axios.get('http://localhost:4000/calendars/all');
-      setCalendars(response.data.calendars);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  try {
+    const response = await axios.get('http://localhost:4000/calendars/all');
+    const filteredData = response.data.calendars.map(calendar => ({
+      id: calendar.id,
+      name: calendar.name,
+      appointmentTypes: calendar.appointmentTypes
+    }));
+    setCalendars(filteredData);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 
   
   const fetchAvailableDates = async () => {
     const appointmentTypeID = 23715014; 
-    const calendarID = 8758616;   
+    const calendarID = 8758616;
     let allAvailableSlots = []; 
   
     try {
-      // Boucle sur chaque mois de l'année
-      for (let month = 1; month <= 12; month++) {
-        // Formatage du mois au format 'YYYY-MM'
-        const monthFormatted = `2024-${month.toString().padStart(2, '0')}`;
+      const currentYear = new Date().getFullYear();
   
-        // Appel à l'API pour chaque mois
+      for (let month = 1; month <= 12; month++) {
+        const monthFormatted = `${currentYear}-${month.toString().padStart(2, '0')}`;
+  
         const response = await axios.get('http://localhost:4000/fetch_appointment_dates', {
           params: {
             appointmentTypeID: appointmentTypeID,
@@ -157,12 +166,16 @@ const PraticionerDetails = () => {
           }
         });
   
-       
-        const dates = response.data.map(dateObj => new Date(dateObj.date));
+        const dates = response.data.map(dateObj => {
+          const dateUTC = new Date(dateObj.date);
+          // Conversion de UTC à l'heure locale
+          const dateLocal = new Date(dateUTC.getTime() + dateUTC.getTimezoneOffset() * 60000);
+          return dateLocal;
+        });
+  
         allAvailableSlots = [...allAvailableSlots, ...dates];
       }
   
-      
       setAvailableSlots(allAvailableSlots);
     } catch (error) {
       console.error('Erreur lors de la récupération des dates disponibles :', error);
@@ -176,19 +189,25 @@ const PraticionerDetails = () => {
   
   
   
+  
+  
   const fetchAvailableTimes = async (date) => {
-    const formattedDate = date.toISOString().split('T')[0];
-    try {
-      const response = await axios.get('http://localhost:4000/fetch_appointment_times', {
-        params: {
-          appointmentTypeID: selectedAppointmentType,
-          calendarID: selectedCalendar,
-          date: formattedDate,
-        },
-      });
+    const parisDate = new Date(date.getTime() - (date.getTimezoneOffset() * 60000))
+                    .toISOString()
+                    .replace(/T.*$/, '');
+                    console.log('parisDate',parisDate)
+                    
+  try {
+    const response = await axios.get('http://localhost:4000/fetch_appointment_times', {
+      params: {
+        appointmentTypeID: selectedAppointmentType,
+        calendarID: selectedCalendar,
+        date: parisDate, // j'utilise la date formatée pour le fuseau horaire de Paris
+      },
+    });
       // Conversion des horaires en format HH:mm
       const timesInParis = response.data.map((timeSlot) => {
-        // Créez une date JavaScript avec la date et l'heure
+        // Création d'une date JavaScript avec la date et l'heure
         let dateTime = new Date(timeSlot.time);
         // Les heure locale (GMT+1 pour Paris)
         let timeString = dateTime.toLocaleTimeString('fr-FR', { 
@@ -204,30 +223,13 @@ const PraticionerDetails = () => {
       setAvailableTimes([]);
     }
   };
-  
-  
-  
-    
-  
-  const handleAppointmentTypeChange = (newAppointmentType) => {
-    setSelectedAppointmentType(newAppointmentType);
-    setPractitioners([]);
-    fetchPractitioners();
-    console.log(`handleAppointmentTypeChange()\nnewAppointmentType : ${newAppointmentType}`);
-  };
+
+
 
   useEffect(() => {
     fetchAppointmentTypes();
     fetchCalendars();
   }, []);
-
-
-  
-  useEffect(() => {
-    if (selectedAppointmentType) {
-      fetchPractitioners();
-    }
-  }, [selectedAppointmentType]);
 
   const service = usePractitionerService();
 
@@ -285,18 +287,20 @@ const PraticionerDetails = () => {
     
           <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={() => setShowInput(!showInput)}>Book an Appointment</button>
     
-          {showInput && (
-            <select id="appointmentType" value={selectedAppointmentType} onChange={(e) => handleAppointmentTypeChange(e.target.value)} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
-              <option value="" disabled>Choose appointment type</option>
-              {
-                appointmentTypes.map((appointmentType) => (
-                  <option key={appointmentType.id} value={appointmentType.id}>
-                    {appointmentType.name}
-                  </option>
-                ))
-              }
-            </select>
-          )}
+                {showInput && appointmentTypes.length > 0 && (
+        <select
+          id="appointmentType"
+          value={selectedAppointmentType}
+          onChange={(e) => handleAppointmentTypeChange(e.target.value)}
+          required
+        >
+          <option value="" disabled>Choose appointment type</option>
+          {appointmentTypes.map((type) => (
+            <option key={type.id} value={type.id}>{type.name}</option>
+          ))}
+        </select>
+      )}
+
           
           {selectedAppointmentType && showInput && (
                    
@@ -356,52 +360,46 @@ const PraticionerDetails = () => {
         <div>
           <label htmlFor="firstName" className="block text-sm font-medium text-gray-700">First Name *</label>
           <input
-            type="text"
-            id="firstName"
-            name="firstName"
-            autoComplete="given-name"
-            placeholder="Your first name"
-            required
-            className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-            onChange={(e) => setName(e.target.value)}
-            value={name}
-          />
+  type="text"
+  value={firstName}
+  onChange={(e) => setFirstName(e.target.value)}
+  // autres attributs
+/>
         </div>
         
         <div>
           <label htmlFor="lastName" className="block text-sm font-medium text-gray-700">Last Name *</label>
           <input
-            type="text"
-            id="lastName"
-            name="lastName"
-            autoComplete="family-name"
-            placeholder="Your last name"
-            required
-            className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-            // Assume you have a state for lastName to update it
-            // onChange={(e) => setLastName(e.target.value)}
-          />
+  type="text"
+  value={lastName}
+  onChange={(e) => setLastName(e.target.value)}
+  // autres attributs
+/>
         </div>
         
         <div>
           <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email *</label>
           <input
-            type="email"
-            id="email"
-            name="email"
-            autoComplete="email"
-            placeholder="Your email address"
-            required
-            className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-            onChange={(e) => setEmail(e.target.value)}
-            value={email}
-          />
+  type="email"
+  value={email}
+  onChange={(e) => setEmail(e.target.value)}
+  // autres attributs
+/>
           
         </div>
+        <div>
+  <label htmlFor="phone" className="block text-sm font-medium text-gray-700">Téléphone *</label>
+  <input
+  type="tel"
+  value={phone}
+  onChange={(e) => setPhone(e.target.value)}
+  // autres attributs
+/>
+</div>
         <button
       type="submit"
       className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-500 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 w-full"
-      onClick={handleSubmit} // Mettez à jour cette fonction pour gérer la soumission du formulaire
+      onClick={handleSubmit} 
     >
       Take Appointment
     </button>

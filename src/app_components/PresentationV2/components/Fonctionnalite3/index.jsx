@@ -4,22 +4,14 @@ import Logo2 from '../../../../assets/reassurance-recommendation-removebg-previe
 import Logo3 from '../../../../assets/reassurance-avis-removebg-preview.png';
 import TitaImage from '/src/assets/tita.jpeg'; 
 
+
 const FeatureSection = () => {
   return (
     <div className="relative">
-     
-      <div className="absolute top-0 left-0 right-0">
-        <svg viewBox="0 0 1200 50" preserveAspectRatio="none">
-          <path
-            d="M0 120 Q 300 0 600 120  120 V 0 H 0"
-            fill="#EDF2F7" 
-          ></path>
-        </svg>
-      </div>
 
       
       <div className="bg-slate-500 flex mt-4 p-4 rounded-md pt-12"> 
-        <div className="rounded-lg">
+        <div className="rounded-lg max-w-6xl mx-auto">
           <h1 className="text-3xl font-bold text-white">
           Take action for your well-being.
           </h1>
@@ -31,7 +23,7 @@ const FeatureSection = () => {
             </a>.
           </p>
 
-          {/* Image and button at the bottom of the <p> tag */}
+          
           <div className="flex items-center">
             <img src={TitaImage} alt="Solange Arnaud" className="w-32 h-32 object-cover rounded-full mr-4" />
             <button className="bg-pink-500 hover:bg-pink-600 text-white font-bold py-2 px-4 rounded-full">
@@ -40,25 +32,25 @@ const FeatureSection = () => {
           </div>
         </div>
 
-        {/* Three small vertically aligned divs */}
-      <div className="flex flex-col ml-auto">
-        {/* First div */}
+        
+      <div className="flex flex-col ml-auto mr-12">
+       
         <div className="p-4 rounded-md flex items-center text-center bg-white border border-black mb-4">
-          {/* Circular logo */}
+          
           <img src={Logo1} alt="Logo 1" className="w-8 h-8 rounded-full mr-2" />
           <p className="font-bold text-black">Verified Trainings and Experiences</p>
         </div>
 
-        {/* Second div */}
+        
         <div className="p-4 rounded-md flex items-center text-center bg-white border border-black mb-4">
-          {/* Circular logo */}
+          
           <img src={Logo2} alt="Logo 2" className="w-8 h-8 rounded-full mr-2" />
           <p className="font-bold text-black">Verified Trainings and Experiences</p>
         </div>
 
-        {/* Third div */}
+        
         <div className="p-4 rounded-md flex items-center text-center bg-white border border-black">
-          {/* Circular logo */}
+          
           <img src={Logo3} alt="Logo 3" className="w-8 h-8 rounded-full mr-2" />
           <p className="font-bold text-black">Verified Trainings and Experiences</p>
         </div>
