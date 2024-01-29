@@ -10,14 +10,14 @@ const FeatureSection = () => {
     <div className="relative">
 
       
-      <div className="bg-slate-500 flex mt-4 p-4 rounded-md pt-12"> 
+      <div className="bg-[#3BAFBC] flex mt-4 p-4 rounded-md pt-12 max-w-5xl mx-auto"> 
         <div className="rounded-lg max-w-6xl mx-auto">
           <h1 className="text-3xl font-bold text-white">
           Take action for your well-being.
           </h1>
 
           <p className="mt-5 text-white text-left mb-8">
-          Oser le Changement is an institution<br /> dedicated to supporting and helping individuals facing addictions<br /> such as alcohol, tobacco...We enable everyone to take control of their health and well-being<br /> by facilitating access to complementary practices.<br /> Oser le changement aims to inform, provide honest understanding,<br /> and empower individuals to make informed choices, fully aware of the risks and benefits.<br /> 
+           Free session Changement is an institution<br /> dedicated to supporting and helping individuals facing addictions<br /> such as alcohol, tobacco...We enable everyone to take control of their health and well-being<br /> by facilitating access to complementary practices.<br /> Oser le changement aims to inform, provide honest understanding,<br /> and empower individuals to make informed choices, fully aware of the risks and benefits.<br /> 
             <a href="#" className="text-white-500 hover:underline">
             Learn more about our purpose and mission
             </a>.
@@ -26,7 +26,7 @@ const FeatureSection = () => {
           
           <div className="flex items-center">
             <img src={TitaImage} alt="Solange Arnaud" className="w-32 h-32 object-cover rounded-full mr-4" />
-            <button className="bg-pink-500 hover:bg-pink-600 text-white font-bold py-2 px-4 rounded-full">
+            <button className="bg-black hover:bg-pink-600 text-white font-bold py-2 px-4 rounded-full">
               See the video
             </button>
           </div>

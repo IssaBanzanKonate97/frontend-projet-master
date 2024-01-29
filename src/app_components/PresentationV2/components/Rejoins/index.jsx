@@ -7,7 +7,7 @@ import Image4 from '../../../../assets/DALL·E 2024-01-16 00.19.24 - Create a pr
 
 const Hi = () => {
     return (
-        <section className='w-full rounded-lg h-96 bg-cyan-500 max-w-5xl mx-auto flex flex-col justify-center'>
+        <section className='w-full rounded-lg h-96 bg-[#3BAFBC] max-w-5xl mx-auto flex flex-col justify-center'>
             <div className='h-full max-w-5xl mx-auto flex flex-col justify-start items-center mt-10'>
                 <h1 className="text-4xl max-w-xl font-bold text-white leading-tight tracking-tighter mb-2 mt-10">
                     Are you a practitioner?

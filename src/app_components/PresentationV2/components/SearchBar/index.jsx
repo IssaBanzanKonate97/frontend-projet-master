@@ -61,7 +61,7 @@ const SearchBar = () => {
                     disabled={false}
                     required={false}
                     onChange={(e) => handleSearchSubmit(e)}
-                    placeholder="Recherchez un praticien"
+                    placeholder="Search for a practitioner"
                 />
                 <button
                     type="submit"

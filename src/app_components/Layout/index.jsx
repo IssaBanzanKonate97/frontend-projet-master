@@ -6,6 +6,7 @@ const Layout = ({ children }) => {
     return (
         <>
             <Header />
+            
             <main className="pb-10 mx-auto w-screen bg-white">
                 
                 <div className="max-w-8xl mx-auto">

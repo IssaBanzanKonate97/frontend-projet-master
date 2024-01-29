@@ -4,7 +4,7 @@ import Images from '/src/assets/DALL_E_2024-01-17_17.40.36_-_Create_an_illustrat
 
 const HeroSection = () => {
     return (
-        <section className='h-96 bg-cyan-500'>
+        <section className='h-96 bg-[#3BAFBC]'>
             <div className='max-w-5xl mx-auto h-full flex justify-between items-center'>
                 
                 <div className='pb-12 flex flex-col gap-6'>

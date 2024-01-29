@@ -10,7 +10,7 @@ const Fonctionnalite2 = () => {
           Our practitioners<br /> accompany you<br /> to act for your well-being.
           </h2>
           
-          <button className="border-2 border-orange-500 rounded-full px-4 py-2 text-orange-500 hover:bg-orange-500 hover:text-white">
+          <button className="bg-black hover:bg-pink-600 text-white font-bold py-2 px-4 rounded-full">
           All disorders
           </button>
         </div>

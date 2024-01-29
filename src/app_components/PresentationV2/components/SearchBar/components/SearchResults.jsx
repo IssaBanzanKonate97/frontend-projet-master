@@ -14,10 +14,10 @@ const SearchResults = ({ results }) => {
                             </div>
                             <div className="flex flex-col items-start">
                                 <h4 className="text-slate-900 font-bold group-hover:text-indigo-900">
-                                    {name} avec {practitioner}
+                                    {name} with {practitioner}
                                 </h4>
                                 <span className="text-slate-600 text-sm">
-                                    Établissement: {establishment}
+                                 Establishment: {establishment}
                                 </span>
                             </div>
                         </div>

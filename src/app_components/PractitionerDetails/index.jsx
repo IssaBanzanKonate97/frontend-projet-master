@@ -34,6 +34,8 @@ const PraticionerDetails = () => {
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
+  const [password, setPassword] = useState('');
+
   const { id } = useParams();
   
   const handleSubmit = async (e) => {
@@ -76,6 +78,7 @@ const PraticionerDetails = () => {
         lastName,
         email,
         phone,
+        password,
         appointmentTypeID: selectedAppointmentType,
         calendar: selectedCalendar,
         date: formattedDate,
@@ -363,7 +366,7 @@ const handleAppointmentTypeChange = (e) => {
   type="text"
   value={firstName}
   onChange={(e) => setFirstName(e.target.value)}
-  // autres attributs
+  
 />
         </div>
         
@@ -373,7 +376,7 @@ const handleAppointmentTypeChange = (e) => {
   type="text"
   value={lastName}
   onChange={(e) => setLastName(e.target.value)}
-  // autres attributs
+  
 />
         </div>
         
@@ -383,7 +386,7 @@ const handleAppointmentTypeChange = (e) => {
   type="email"
   value={email}
   onChange={(e) => setEmail(e.target.value)}
-  // autres attributs
+ 
 />
           
         </div>
@@ -393,9 +396,20 @@ const handleAppointmentTypeChange = (e) => {
   type="tel"
   value={phone}
   onChange={(e) => setPhone(e.target.value)}
-  // autres attributs
+  
 />
+
 </div>
+
+      <div>
+        <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password *</label>
+        <input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          
+        />
+      </div>
         <button
       type="submit"
       className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-500 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 w-full"

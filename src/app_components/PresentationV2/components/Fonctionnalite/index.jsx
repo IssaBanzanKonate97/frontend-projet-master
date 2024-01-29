@@ -21,19 +21,19 @@ const Fonctionnalite = () => {
           
           <div className="min-w-max p-4 rounded-md text-center flex flex-col justify-center items-center">
            
-            <img src="/src/assets/tita.jpeg" alt="Ayurveda" className="w-32 h-32 object-cover rounded-md" />
+            <img src="/src/assets/alcool.png" alt="Ayurveda" className="w-32 h-32 object-cover rounded-md" />
             <p className="font-bold mt-2">Addiction</p>
             <p className="mt-1">all about <br /> alcoholism</p>
           </div>
           
           <div className="min-w-max p-4 rounded-md text-center flex flex-col justify-center items-center">
-            <img src="/src/assets/image-scaled.jpeg" alt="Hypnose" className="w-32 h-32 object-cover rounded-md" />
+            <img src="/src/assets/tabac.png" alt="Hypnose" className="w-32 h-32 object-cover rounded-md" />
             <p className="font-bold mt-2">Tabacco</p>
             <p className="mt-1">How to stop <br /> smoking?</p>
           </div>
           
           <div className="min-w-max p-4 rounded-md text-center flex flex-col justify-center items-center">
-            <img src="/src/assets/loup.jpeg" alt="Énergétique Traditionnelle Chinoise" className="w-32 h-32 object-cover rounded-md" />
+            <img src="/src/assets/drogue.png" alt="Énergétique Traditionnelle Chinoise" className="w-32 h-32 object-cover rounded-md" />
             <p className="font-bold mt-2">Drug</p>
             <p className="mt-1">addiction and<br /> drug dependence</p>
             </div>

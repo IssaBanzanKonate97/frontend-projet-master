@@ -2,8 +2,9 @@
 import Layout from "../Layout";
 import React from 'react';
 import { Heart, Home, Phone, Users, Mail } from 'react-feather';
-import WorkingRemotelyImage from '../../assets/lt.png';
-import WorkingRemotelyImage2 from '../../assets/tire-removebg-preview.png';
+import WorkingRemotelyImage from '../../assets/bog.png';
+import WorkingRemotelyImage2 from '../../assets/but.png';
+import WorkingRemotelyImage3 from '../../assets/borgue.png';
 import axios from 'axios';
 import { useEffect } from 'react';
 import { useState } from 'react';
@@ -41,26 +42,25 @@ const Contact = () => {
   };
   return (
     <Layout>
-      <div className="container mx-auto mt-2 flex flex-col justify-between">
-        <div className="flex justify-between items-center mt-2 mb-4">
+      <div className="max-w-9xl">
+        <div className="flex justify-between items-center bg-cyan-500 ">
           <div>
-          <h1 className="text-4xl font-semibold mb-5 text-black">Contactez-us !</h1>
-          <p className="text-lg text-black font-medium max-w-xl">
+          <h1 className="text-4xl font-semibold mb-5 text-white ml-10">Contactez-us !</h1>
+          <p className="text-lg text-white font-medium max-w-xl ml-10">
               Free your future or that of a loved one with the ADIOS method.
               Contact us for more information about our method,
               the sessions' process, scheduling appointments, or any other details.
             </p>
           </div>
-          <img src={WorkingRemotelyImage} alt="Working Remotely" className="max-w-md mt-9"/>
+          <img src={WorkingRemotelyImage} alt="Working Remotely" className="w-1/1 max-w-xs mr-10"/>
         </div>
 
-        <h1 className="text-3xl font-semibold mb-2 text-black">Send us a message</h1>
-
-        <div className="flex justify-between mt-8">
-          <div className="max-w-xl w-full">
-          <form className="w-full" onSubmit={handleSubmit}>
+        <div className="bg-slate-800 max-w-9xl mx-auto flex justify-start items-center">
+              <img src={WorkingRemotelyImage2} alt="Working Remotely" className="w-1/1 max-w-xs mb-4"/>
+          <form className=" mt-5 w-1/2" onSubmit={handleSubmit}>
+         
               <div className="mb-4">
-                <label htmlFor="name" className="block text-sm font-medium text-gray-600">
+                <label htmlFor="name" className="block text-sm font-medium text-white-600">
                   Name
                 </label>
                 <input
@@ -68,40 +68,41 @@ const Contact = () => {
                   id="name"
                   name="name"
                   value={name}
-                  className="mt-1 p-3 w-full border rounded-md text-black placeholder-gray-500"
+                  className="mt-1 p-3 w-full border rounded-md text-white placeholder-gray-500"
                   placeholder="Votre nom"
                   onChange={(e) => setName(e.target.value)}
                 />
               </div>
               <div className="mb-4">
-                <label htmlFor="email" className="block text-sm font-medium text-gray-600">
+                <label htmlFor="email" className="block text-sm font-medium text-white">
                   Mail
                 </label>
                 <input
                   type="email"
                   id="email"
-                  name="email"
+                  name="email text-black"
                   value={email}
     
-                  className="mt-1 p-3 w-full border rounded-md text-black placeholder-gray-500"
+                  className="mt-1 p-3 w-full border rounded-md text-white placeholder-black-500"
                   placeholder="Votre adresse e-mail"
                   onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
               <div className="mb-4">
-                <label htmlFor="message" className="block text-sm font-medium text-gray-600">
+                <label htmlFor="message" className="block text-sm font-medium text-white">
                   Message
                 </label>
                 <textarea
                   id="message"
                   name="message"
-                  rows="4"
+                  rows="2"
                   value={message}
-                  className="mt-1 p-3 w-full border rounded-md text-black placeholder-gray-500"
+                  className="mt-1 p-3 w-full border rounded-md text-white placeholder-black-500"
                   placeholder="Votre message"
                   onChange={(e) => setMessage(e.target.value)}
                 ></textarea>
               </div>
+              
               <div className="mb-4">
                 <button
                   type="submit"
@@ -111,31 +112,29 @@ const Contact = () => {
                 </button>
               </div>
             </form>
-          </div>
-
-          <div className="mr-20 mt-10">
-            <div className="mb-4 flex items-center">
-              <Phone className="mr-2" size={30} color="black" strokeWidth={2} />
-              <p className="font-semibold text-black">Depuis la France</p>
+            <div className="ml-10">
+            <div className="flex items-center">
+              <Phone className="mr-2" size={30} color="white" strokeWidth={2} />
+              <p className="font-semibold text-white">Fron france</p>
             </div>
-            <p className="font-semibold text-black ml-8">01 73 20 28 92</p>
+            <p className="font-semibold text-white ml-10">01 73 20 28 92</p>
 
             <div className="mt-6 flex items-center">
-              <Phone className="mr-2" size={30} color="black" strokeWidth={2} />
-              <p className="font-semibold text-black">Depuis l’étranger</p>
+              <Phone className="mr-2" size={30} color="white" strokeWidth={2} />
+              <p className="font-semibold text-white">From abroad</p>
             </div>
-            <p className=" font-semibold text-black ml-8">01 73 20 28 92</p>
+            <p className=" font-semibold text-white ml-10">01 73 20 28 92</p>
 
             <div className="mt-6 flex items-center">
-              <Mail className="mr-2" size={30} color="black" strokeWidth={2} />
-              <p className="font-semibold text-black">contact@institutadios.com</p>
+              <Mail className="mr-2" size={30} color="white" strokeWidth={2} />
+              <p className="font-semibold text-white">contact@freesession.com</p>
             </div>
-            <div className="mt-10">
-              <img src={WorkingRemotelyImage2} alt="Working Remotely" className="max-w-md"/>
             </div>
           </div>
+
+          
         </div>
-      </div>
+      
     </Layout>
   );
 };
