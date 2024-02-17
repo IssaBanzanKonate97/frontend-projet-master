@@ -12,6 +12,10 @@ const navigationLinks = [
         name: "Hours",
         href: '#opening_hours',
     },
+    {
+        name: "Specialties",
+        href: '#speciality',
+    },
 ];
 
 const NavigationLinks = () => {

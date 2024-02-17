@@ -3,35 +3,36 @@ import Nathalie from '/src/assets/nathalie.jpeg';
 import Veronique from '/src/assets/veronique.jpg'; 
 import Joel from '/src/assets/joel.webp'; 
 import Sarah from '/src/assets/sarah.jpeg'; 
-import PlayIcon from '/src/assets/dite.png'; // Ensure you have a play icon image in your assets
+import PlayIcon from '/src/assets/dite.png'; 
 
+
+import { Facebook, Instagram, Youtube } from 'react-feather';
 
 const testimonials = [
   {
-    name: 'Nathalie Dega',
-    role: 'a consulté en hypnose',
-    imageUrl: Nathalie,
+    name: 'Nathalie Déga',
+    role: 'Freesession',
+    imageUrl: "https://picsum.photos/200/300",
     videoUrl: 'path-to-video'
   },
   {
-    name: 'Véronique',
-    role: 'a consulté en naturopathie',
-    imageUrl: Veronique,
+    name: 'Véronique Oualid',
+    role: 'Freesession',
+    imageUrl: "https://picsum.photos/seed/picsum/200/300",
     videoUrl: 'path-to-video'
   },
   {
-    name: 'Joel',
-    role: 'a consulté en sophrologie',
-    imageUrl: Joel,
+    name: 'Nathalie Conté',
+    role: 'Freesession',
+    imageUrl: "https://picsum.photos/200",
     videoUrl: 'path-to-video'
   },
   {
-    name: 'Sarah',
-    role: 'a consulté en réflexologie',
-    imageUrl: Sarah,
+    name: 'Muriel Dangremont',
+    role: 'Freesession',
+    imageUrl: "https://picsum.photos/200/300?lion",
     videoUrl: 'path-to-video'
   },
- 
 ];
 
 const TestimonialsSection = () => {
@@ -44,9 +45,9 @@ const TestimonialsSection = () => {
           <span className="ml-2 text-black">1089 Google</span>
         </div>
       </div>
-      <div className="flex flex-wrap justify-center overflow-x-auto py-8 mx-auto max-w-3xl">
+      <div className="flex flex-wrap justify-center overflow-x-auto py-8 mx-auto max-w-5xl">
         {testimonials.map((testimonial, index) => (
-          <div key={index} className="flex-none w-1/4 px-2">
+          <div key={index} className="flex-none w-full sm:w-1/2 md:w-1/4 px-2">
             <div className="bg-white p-4 rounded-lg shadow relative">
               <img
                 src={testimonial.imageUrl}
@@ -73,6 +74,12 @@ const TestimonialsSection = () => {
             </div>
           </div>
         ))}
+      </div>
+      
+      <div className="flex justify-center items-center gap-20 mt-3">
+        <Youtube className="text-red-600 w-8 h-8 cursor-pointer" />
+        <Instagram className="text-purple-500 w-8 h-8 cursor-pointer" />
+        <Facebook className="text-blue-600 w-8 h-8 cursor-pointer" />
       </div>
     </div>
   );

@@ -4,11 +4,11 @@ import Images from '/src/assets/DALL_E_2024-01-17_17.40.36_-_Create_an_illustrat
 
 const HeroSection = () => {
     return (
-        <section className='h-96 bg-[#3BAFBC]'>
-            <div className='max-w-5xl mx-auto h-full flex justify-between items-center'>
+        <section className='h-auto md:h-96 bg-[#3BAFBC]'>
+            <div className='max-w-5xl mx-auto h-full md:flex md:justify-between md:items-center'>
                 
                 <div className='pb-12 flex flex-col gap-6'>
-                    <h1 className='inter text-4xl font-bold text-white leading-tight tracking-tighter'>
+                    <h1 className='inter text-4xl md:text-5xl lg:text-4xl font-bold text-white leading-tight tracking-tighter'>
                         Book free sessions with <br/> practitioners
                     </h1>
 
@@ -25,7 +25,7 @@ const HeroSection = () => {
                 <img 
                     src={Images} 
                     alt='Relaxed person on bean bag' 
-                    className='max-w-xs'
+                    className='w-full md:max-w-xs mx-auto'
                 />
 
             </div>

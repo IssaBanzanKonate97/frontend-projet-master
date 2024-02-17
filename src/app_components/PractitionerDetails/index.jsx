@@ -16,6 +16,8 @@ import { Heart, Home, Phone, Users } from 'react-feather';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import axios from 'axios';
+import PaiementComponent from './components/PaiementComponent';
+
 
 
 
@@ -35,6 +37,9 @@ const PraticionerDetails = () => {
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
+  const [appointmentTaken, setAppointmentTaken] = useState(false);
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [isCautionPaid, setIsCautionPaid] = useState(false);
 
   const { id } = useParams();
 
@@ -91,15 +96,35 @@ const PraticionerDetails = () => {
         }
       );
       console.log(response.data);
+
+      setFirstName('');
+      setLastName('');
+      setEmail('');
+      setPhone('');
+      setPassword('');
+      setShowInput(false);
+      setSelectedDate(null);
+      setSelectedTime(null);
     } catch (error) {
       console.error(error);
     }
   };
 
+  const handlePayCautionClick = () => {
 
+    setShowPaymentModal(true);
+  };
+
+  const handlePaymentSubmit = async () => {
+
+    console.log("Traitement du paiement pour:", firstName, lastName, email, phone);
+
+    setIsCautionPaid(true);
+    setShowPaymentModal(false);
+  };
 
   const handleDateChange = (date) => {
-    console.log('issa')
+
     console.log(date)
     setSelectedDate(date);
     fetchAvailableTimes(date);
@@ -109,7 +134,7 @@ const PraticionerDetails = () => {
   const fetchAppointmentTypes = async () => {
     try {
       const response = await axios.get('http://localhost:4000/appointment-types/all');
-      const specificAppointmentType = response.data.filter(appointmentType => appointmentType.id === 23715014);
+      const specificAppointmentType = response.data.filter(appointmentType => appointmentType.id === 58939154);
       setAppointmentTypes(specificAppointmentType);
 
       if (specificAppointmentType.length > 0) {
@@ -151,8 +176,8 @@ const PraticionerDetails = () => {
 
 
   const fetchAvailableDates = async () => {
-    const appointmentTypeID = 23715014;
-    const calendarID = 8758616;
+    const appointmentTypeID = 58939154;
+    const selectedCalendarID = selectedCalendar;
     let allAvailableSlots = [];
 
     try {
@@ -165,7 +190,7 @@ const PraticionerDetails = () => {
           params: {
             appointmentTypeID: appointmentTypeID,
             month: monthFormatted,
-            calendarID: calendarID
+            calendarID: selectedCalendarID
           }
         });
 
@@ -187,8 +212,12 @@ const PraticionerDetails = () => {
   };
 
   useEffect(() => {
-    fetchAvailableDates();
+    if (selectedCalendar) {
+      fetchAvailableDates();
+    }
   }, [selectedAppointmentType, selectedCalendar]);
+
+
 
 
 
@@ -271,6 +300,21 @@ const PraticionerDetails = () => {
                 <div>
                   <h5 className="text-slate-700 font-bold text-sm mb-2">Contact</h5>
                   <p className="text-slate-600 text-sm mb-2 inter">{practitioner.contact}</p>
+                </div>
+              </div>
+            </DetailsCard>
+            <DetailsCard id="#specialites" icon={<AlignLeft className='w-4 h-4 text-cyan-600' />} title="Specialties">
+              <div className='grid grid-cols-2 gap-8'>
+                <div>
+                  <h5 className="text-slate-700 font-bold text-sm mb-2">Specialist</h5>
+                  <p className="text-slate-600 text-sm mb-2 inter">{practitioner.specialist.specialities[0]}, {practitioner.specialist.specialities[1]}, {practitioner.specialist.specialities[2]}</p>
+
+                </div>
+                <div className='ml-50'>
+                  <h5 className="text-slate-700 font-bold text-sm mb-2">Languages</h5>
+                  <p className="text-slate-600 text-sm mb-2 inter">{practitioner.languages[0]}, {practitioner.languages[1]}</p>
+
+
                 </div>
               </div>
             </DetailsCard>
@@ -410,13 +454,34 @@ const PraticionerDetails = () => {
 
                       />
                     </div>
+
                     <button
-                      type="submit"
-                      className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-500 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 w-full"
-                      onClick={handleSubmit}
+                      className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded mb-2"
+                      onClick={handlePayCautionClick}
                     >
-                      Take Appointment
+                      Payer la caution
                     </button>
+
+                    {showPaymentModal && (
+
+                      <div className="App">
+                        <PaiementComponent />
+                      </div>
+                    )}
+
+                    {
+                      isCautionPaid && (
+                        <button
+                          type="submit"
+                          className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-500 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 w-full"
+                          onClick={handleSubmit}
+                        >
+                          Take Appointment
+                        </button>
+                      )
+                    }
+
+
 
                   </div>
 

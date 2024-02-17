@@ -9,6 +9,7 @@ const PresentationHeader = ({ practitioner }) => {
                     <div className="flex flex-col items-start">
                         <h1 className="text-white text-2xl font-bold">
                             {practitioner.practitioner}
+                            
                         </h1>
                         <span className="text-white text-sm">
                             {practitioner.subTitle}
