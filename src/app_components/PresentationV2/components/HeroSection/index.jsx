@@ -1,6 +1,6 @@
 import { Hint } from '../../../../app_atomic/Title';
 import SearchBar from '../SearchBar';
-import Images from '/src/assets/DALL_E_2024-01-17_17.40.36_-_Create_an_illustration_of_a_person_lounging_contently_on_a_bean_bag_with_a_whimsical_and_comforting_style._The_person_is_in_a_restful_pose_with_their_-removebg-preview.png'; 
+import Images from '/src/assets/D1.png'; 
 
 const HeroSection = () => {
     return (
@@ -22,10 +22,11 @@ const HeroSection = () => {
                     </div>
                 </div>
 
+                
                 <img 
                     src={Images} 
                     alt='Relaxed person on bean bag' 
-                    className='w-full md:max-w-xs mx-auto'
+                    className='hidden md:block w-full md:max-w-xs mx-auto'
                 />
 
             </div>

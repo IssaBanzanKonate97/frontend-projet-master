@@ -5,7 +5,9 @@ import Fonctionnalite from "./components/Fonctionnalite";
 import Rejoins from "./components/Rejoins";
 import Fonctionnalite2 from "./components/Fonctionnalite2";
 import Fonctionnalite3 from "./components/Fonctionnalite3";
-import Fonctionnalite4 from "./components/Fonctionnalite4";
+import Fonctionnalite5 from "./components/Fonctionnalite5";
+import Fonctionnalite6 from "./components/Fonctionnalite6";
+
 
 const PresentationV2 = () => {
     return ( 
@@ -14,9 +16,11 @@ const PresentationV2 = () => {
             <Barre />
             <Fonctionnalite />
             <Rejoins />
-            <Fonctionnalite2  />
+            <Fonctionnalite2 />
             <Fonctionnalite3 />
-            <Fonctionnalite4 />
+            <Fonctionnalite5 />
+            <Fonctionnalite6 />
+            
             
         </Layout>
     )

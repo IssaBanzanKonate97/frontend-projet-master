@@ -37,8 +37,8 @@ const Footer = () => {
         </div>
 
         <div className="text-sm mt-4">
-          <p>
-            We offer a free 15-minute appointment service for those looking to become practitioners in the field of addiction. Our company specializes in innovative approaches to addiction.
+          <p className='text-white'>
+          Warning: If you feel unwell or sick, first consult a doctor or healthcare professional who can make a diagnosis and suggest appropriate treatment. This site presents general information on unconventional medicines, it is in no way personalized advice and consultations. The practitioners listed on this site are not doctors and in no way replace the role of your doctor. By using this site you acknowledge that it does not offer the diagnosis or treatment of any disease. Results are not guaranteed, they depend on many elements and in particular on people and context.
           </p>
         </div>
       </div>

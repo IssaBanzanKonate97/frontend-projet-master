@@ -1,7 +1,7 @@
-import Image1 from '../../../../assets/DALL·E 2024-01-15 23.54.13 - Create a professional logo inspired by the style of the provided image, which should be clean and simple. The logo must incorporate an eye design, sig.png';
-import Image2 from '../../../../assets/DALL·E 2024-01-15 23.59.04 - Create a professional logo that clearly represents a calendar, maintaining a clean and simple design. The logo should be in a white and slate grey col.png';
-import Image3 from '../../../../assets/DALL·E 2024-01-16 00.16.26 - Create a professional logo that clearly depicts a man and a woman shaking hands, embodying a professional partnership. The design should be clean and .png';
-import Image4 from '../../../../assets/DALL·E 2024-01-16 00.19.24 - Create a professional logo that represents  The design should be clean and simple, using a white and slate grey color.png'; 
+import Image1 from '../../../../assets/D3.png';
+import Image2 from '../../../../assets/D4.png';
+import Image3 from '../../../../assets/D5.png';
+import Image4 from '../../../../assets/D6.png'; 
 
 const Hi = () => {
     return (
